@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Game version 1.1.6f1.
+- Game version 1.1.7f1.
 - BepInEx 5.4.21
 
 ## Install
@@ -30,6 +30,9 @@
 	- generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
 
 ## Changelog
+- 1.0.0.1 for MapExt
+	- Renamed rootnamespace to MapExt.
+	- Removed harmony patches.
 
 - 1.0.7.6
 	- Compatibility with game version 1.1.6f1.
