@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapExt.Plugin", "MapExt.Plugin\MapExt.Plugin.csproj", "{8FF9447B-C791-43C3-9C93-5E8886926DF7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +26,6 @@ Global
 		{5D12C3BA-01DD-4CE5-AFDA-3EEA953B88B2}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{5D12C3BA-01DD-4CE5-AFDA-3EEA953B88B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D12C3BA-01DD-4CE5-AFDA-3EEA953B88B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FF9447B-C791-43C3-9C93-5E8886926DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FF9447B-C791-43C3-9C93-5E8886926DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FF9447B-C791-43C3-9C93-5E8886926DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FF9447B-C791-43C3-9C93-5E8886926DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
