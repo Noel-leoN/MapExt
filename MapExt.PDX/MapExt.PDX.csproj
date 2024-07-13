@@ -7,7 +7,7 @@
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>9.0</LangVersion>
-		<Version>1.0.7.7</Version>
+		<Version>1.0.8.2</Version>
 
 
 		<!--The file where mod information which is required for publishing mod on PDX mods are stored-->
@@ -18,12 +18,18 @@
 	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.props" />
 	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.targets" />
 	<ItemGroup>
-	  <Compile Remove="ExtMapDebug.cs" />
 	  <Compile Remove="MapExtDebug.cs" />
+	  <Compile Remove="Patches\MethodRedir.cs" />
 	  <Compile Remove="SystemCellSimRef\PowerPlantAISystem.cs" />
 	  <Compile Remove="SystemCellSimRef\TempWaterPumpingTooltipSystem.cs" />
 	  <Compile Remove="SystemCellSimRef\WaterPumpingStationAISystem.cs" />
 	  <Compile Remove="SystemCellSim\CellMapSystem.cs" />
+	  <Compile Remove="SystemCellSim\GroundPollutionSystem.cs" />
+	  <Compile Remove="SystemCellSim\GroundWaterSystem.cs" />
+	  <Compile Remove="SystemCellSim\NaturalResourceSystem.cs" />
+	  <Compile Remove="SystemCellSim\NoisePollutionSystem.cs" />
+	  <Compile Remove="SystemCellSim\TrafficAmbienceSystem.cs" />
+	  <Compile Remove="SystemCellSim\ZoneAmbienceSystem.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -36,10 +42,23 @@
 		<Reference Include="Colossal.Collections">
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="Colossal.Mono.Cecil">
+		  <HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Colossal.Mono.Cecil.dll</HintPath>
+		</Reference>
 		<Reference Include="UnityEngine.AudioModule">
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Colossal.UI.Binding">
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="mscorlib">
+			<HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\mscorlib.dll</HintPath>
+		</Reference>
+		<Reference Include="netstandard">
 			<Private>false</Private>
 		</Reference>
 
@@ -90,12 +109,10 @@
 	<ItemGroup>
 	  <Folder Include="libcs2\" />
 	</ItemGroup>
-
-	<!--
+	
 	<ItemGroup>
 		<PackageReference Include="Lib.Harmony" Version="2.2.2" />
 	</ItemGroup>
-	-->
 	
 	<!--
 	<ItemGroup>

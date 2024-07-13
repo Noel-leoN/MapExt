@@ -58,7 +58,7 @@ namespace MapExt.Systems
                             num += this.m_HouseholdCitizens[renter].Length;
                         }
                     }
-                    int2 cell = CellMapSystem<PopulationCell>.GetCell(this.m_Transforms[entity].m_Position, CellMapSystem<PopulationCell>.kMapSize, PopulationToGridSystem.kTextureSize);
+                    int2 cell = CellMapSystemRe.GetCell(this.m_Transforms[entity].m_Position, CellMapSystemRe.kMapSize, PopulationToGridSystem.kTextureSize);
                     if (cell.x >= 0 && cell.y >= 0 && cell.x < PopulationToGridSystem.kTextureSize && cell.y < PopulationToGridSystem.kTextureSize)
                     {
                         int index = cell.x + cell.y * PopulationToGridSystem.kTextureSize;

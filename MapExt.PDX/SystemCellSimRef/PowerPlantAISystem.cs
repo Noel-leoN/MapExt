@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.Scripting;
 using Game;
 using Game.Simulation;
+using UnityEngine.Rendering.HighDefinition;
 
 
 namespace MapExt.Systems
@@ -182,7 +183,7 @@ namespace MapExt.Systems
 							}
 						}
 					}
-					float2 zero = float2.zero;
+					float2 zero = Unity.Mathematics.float2.zero;
 					if (this.m_PowerPlantDatas.TryGetComponent(prefab, out var componentData2))
 					{
 						zero += PowerPlantTickJob.GetPowerPlantProduction(componentData2, b, efficiency);
@@ -212,7 +213,7 @@ namespace MapExt.Systems
 						UpgradeUtils.CombineStats(ref componentData7, bufferAccessor[i], ref this.m_Prefabs, ref this.m_SolarPoweredData);
 						UpgradeUtils.CombineStats(ref componentData8, bufferAccessor[i], ref this.m_Prefabs, ref this.m_GroundWaterPoweredData);
 					}
-					float2 @float = float2.zero;
+					float2 @float = Unity.Mathematics.float2.zero;
 					if (componentData4.m_Capacity > 0 && nativeArray2.Length != 0)
 					{
 						@float = PowerPlantTickJob.GetGarbageProduction(componentData4, nativeArray2[i]);

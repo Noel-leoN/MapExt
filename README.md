@@ -13,8 +13,8 @@
 
 - install BepInEx 5.4.21 to you game root, run the game once then exit.
 - unzip.
-- put ExtMap.PDX folder to game local pdx mod folder. (usually located in: Users\YouCountName\AppData\LocalLow\Colossal Order\Cities Skylines II)
-- put ExtMap.Patch folder to BepInEx\patchers folder. (not \plungins !)
+- put MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\YouCountName\AppData\LocalLow\Colossal Order\Cities Skylines II)
+- put MapExt.Patch folder to BepInEx\patchers folder. (not \plungins !)
 
 ## Usage
 
@@ -25,11 +25,16 @@
 ## Compatibility
 
 - Modifies:
-	- maptile system.
+	- maptile/areatool system.
 	- .cctor of water/terrain system.
-	- generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
+	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
 
 ## Changelog
+- 1.0.1.0 MapExt
+	- Fix telecom heatmap.
+	- Restore harmony patcher.
+	- Add some simulation systems that may be necessary to modify.
+
 - 1.0.0.1 for MapExt
 	- Renamed rootnamespace to MapExt.
 	- Removed harmony patches.
@@ -53,7 +58,7 @@
 ## Issues
 - May not be compatible with some mods.
 - Repeatedly replicate the overlayinfomation of the playable area to the scope of the world map, its a vanilla bug, hasn't been fixed yet, so please ignore it for now, or don't use too much zoom out.
-- a few simulation systems may not be working properly,such as some water power station.
+- a few simulation systems may not be working properly,such as water pumping/tempwater powerstation.
 - If you found issues please report in github, thank you.
 
 ## Disclaimer

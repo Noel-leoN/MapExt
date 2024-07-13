@@ -11,6 +11,10 @@ using Unity.Mathematics;
 using UnityEngine.Scripting;
 using Game;
 using Game.Simulation;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using HarmonyLib;
+using System;
 
 namespace MapExt.Systems
 {
@@ -36,7 +40,7 @@ namespace MapExt.Systems
             public void Execute()
             {
                 NativeArray<AirPollution> nativeArray = new NativeArray<AirPollution>(this.m_PollutionMap.Length, Allocator.Temp);
-                Random random = this.m_Random.GetRandom((int)this.m_Frame);
+                Unity.Mathematics.Random random = this.m_Random.GetRandom((int)this.m_Frame);
                 for (int i = 0; i < this.m_PollutionMap.Length; i++)
                 {
                     float3 cellCenter = AirPollutionSystem.GetCellCenter(i);
@@ -114,6 +118,7 @@ namespace MapExt.Systems
             this.m_WindSystem.AddReader(base.Dependency);
             base.AddWriter(base.Dependency);
             base.Dependency = JobHandle.CombineDependencies(base.m_ReadDependencies, base.m_WriteDependencies, base.Dependency);
+           
         }
 
         [Preserve]
@@ -125,7 +130,13 @@ namespace MapExt.Systems
         public new NativeArray<AirPollution> GetMap(bool readOnly, out JobHandle dependencies)
         {
             dependencies = (readOnly ? this.m_WriteDependencies : JobHandle.CombineDependencies(this.m_ReadDependencies, this.m_WriteDependencies));
+
+            //debug;
+            //Console.WriteLine("MapExt.Systems.AirPollutionSystem.GetMap: " + this.m_Map);
+
             return this.m_Map;
+            
+
         }
 
         public new CellMapData<AirPollution> GetData(bool readOnly, out JobHandle dependencies)
@@ -135,55 +146,30 @@ namespace MapExt.Systems
             result.m_Buffer = this.m_Map;
             result.m_CellSize = 57344 / (float2)this.m_TextureSize;
             result.m_TextureSize = this.m_TextureSize;
+
+            //debug;
+            //Console.WriteLine("MapExt.Systems.AirPollutionSystem.GetData: " + result.m_CellSize * this.m_TextureSize);
+
             return result;
         }
 
         public new void AddReader(JobHandle jobHandle)
         {
             this.m_ReadDependencies = JobHandle.CombineDependencies(this.m_ReadDependencies, jobHandle);
+
+            //debug;
+            //Console.WriteLine("MapExt.Systems.AirPollutionSystem.AddReader: " + this.m_ReadDependencies);
         }
 
         public new void AddWriter(JobHandle jobHandle)
         {
             this.m_WriteDependencies = jobHandle;
-        }
 
-        //泛型静态方法重定向，仅个别非bc系统引用；
-        /*
-        public static new float3 GetCellCenter(int index, int textureSize)
-        {
-            int num = index % textureSize;
-            int num2 = index / textureSize;
-            int num3 = CellMapSystemRe.kMapSize / textureSize;
-            return new float3(-0.5f * (float)CellMapSystemRe.kMapSize + ((float)num + 0.5f) * (float)num3, 0f, -0.5f * (float)CellMapSystemRe.kMapSize + ((float)num2 + 0.5f) * (float)num3);
+            //debug;
+            //Console.WriteLine("MapExt.Systems.AirPollutionSystem.AddWriter: " + this.m_WriteDependencies);
         }
-
-        public static new Bounds3 GetCellBounds(int index, int textureSize)
-        {
-            int num = index % textureSize;
-            int num2 = index / textureSize;
-            int num3 = CellMapSystemRe.kMapSize / textureSize;
-            return new Bounds3(new float3(-0.5f * (float)CellMapSystemRe.kMapSize + (float)(num * num3), -100000f, -0.5f * (float)CellMapSystemRe.kMapSize + (float)(num2 * num3)), new float3(-0.5f * (float)CellMapSystemRe.kMapSize + ((float)num + 1f) * (float)num3, 100000f, -0.5f * (float)CellMapSystemRe.kMapSize + ((float)num2 + 1f) * (float)num3));
-        }
-
-        public static new float3 GetCellCenter(int2 cell, int textureSize)
-        {
-            int num = CellMapSystemRe.kMapSize / textureSize;
-            return new float3(-0.5f * (float)CellMapSystemRe.kMapSize + ((float)cell.x + 0.5f) * (float)num, 0f, -0.5f * (float)CellMapSystemRe.kMapSize + ((float)cell.y + 0.5f) * (float)num);
-        }
-
-        public static new float2 GetCellCoords(float3 position, int mapSize, int textureSize)
-        {
-            return (0.5f + position.xz / mapSize) * textureSize;
-        }
-
-        public static new int2 GetCell(float3 position, int mapSize, int textureSize)
-        {
-            return (int2)math.floor(CellMapSystemRe.GetCellCoords(position, mapSize, textureSize));
-        }
-        */
-
-        //原系统方法改写(防止用修改gamedll重引用但编译未生效)
+       
+        //原系统方法改写(防止修改gamedll编译未生效)
         public static float3 GetCellCenter(int index)
         {
             return CellMapSystemRe.GetCellCenter(index, AirPollutionSystem.kTextureSize);
@@ -203,6 +189,6 @@ namespace MapExt.Systems
             result.m_Pollution = (short)math.round(math.lerp(math.lerp(pollution, pollution2, @float.x - (float)cell.x), math.lerp(pollution3, pollution4, @float.x - (float)cell.x), @float.y - (float)cell.y));
             return result;
         }
-    }
-
-}
+    }//class;
+        
+}//namespace;

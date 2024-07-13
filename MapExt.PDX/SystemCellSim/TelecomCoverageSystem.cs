@@ -445,7 +445,7 @@ namespace MapExt.Systems
                 {
                     for (int j = min.x; j < max.x; j++)
                     {
-                        float3 cellCenter = CellMapSystemRe.GetCellCenter(new int2(j, i), 128);
+                        float3 cellCenter = CellMapSystemRe.GetCellCenter2(new int2(j, i), 128);
                         float distance = math.length((position - cellCenter).xz);
                         signalStrengthArray[num + j] = math.max(0f, this.CalculateSignalStrength(distance, range));
                     }
@@ -475,7 +475,7 @@ namespace MapExt.Systems
                 int2 @int = cell - min;
                 int2 int2 = max - min;
                 int index = @int.x + int2.x * @int.y;
-                float3 cellCenter = CellMapSystemRe.GetCellCenter(cell, 128);
+                float3 cellCenter = CellMapSystemRe.GetCellCenter2(cell, 128);
                 float3 @float = position - cellCenter;
                 float num = math.length(@float.xz);
                 float num2 = this.CalculateSignalStrength(num, range);
