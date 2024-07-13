@@ -32,12 +32,12 @@
 ## Changelog
 - 1.0.1.0 MapExt
 	- Fix telecom heatmap.
-	- Restore harmony patcher.
+	- Restore harmony patcher. (harmony is still the easiest way)
 	- Add some simulation systems that may be necessary to modify.
 
 - 1.0.0.1 for MapExt
 	- Renamed rootnamespace to MapExt.
-	- Removed harmony patches.
+	- temporarily removed harmony patches.
 
 - 1.0.7.6
 	- Compatibility with game version 1.1.6f1.

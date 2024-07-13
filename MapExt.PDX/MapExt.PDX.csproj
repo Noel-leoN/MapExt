@@ -42,9 +42,7 @@
 		<Reference Include="Colossal.Collections">
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="Colossal.Mono.Cecil">
-		  <HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Colossal.Mono.Cecil.dll</HintPath>
-		</Reference>
+		
 		<Reference Include="UnityEngine.AudioModule">
 			<Private>false</Private>
 		</Reference>
@@ -56,7 +54,8 @@
 		</Reference>
 
 		<Reference Include="mscorlib">
-			<HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\mscorlib.dll</HintPath>
+			<HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\mscorlib.dll</HintPath>			
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="netstandard">
 			<Private>false</Private>
