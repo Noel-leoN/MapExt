@@ -30,6 +30,9 @@
 	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
 
 ## Changelog
+- 1.0.1.1
+	- Minor fix.
+
 - 1.0.1.0 MapExt
 	- Fix telecom heatmap.
 	- Restore harmony patcher. (harmony is still the easiest way)

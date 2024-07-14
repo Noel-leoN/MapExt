@@ -85,6 +85,48 @@ namespace MapExtPreloader
 
             }//cellmap block;
 
+            ///新方法1；增加泛型实例化；
+            //cellmapsys method remake;
+            //获取字段定义；0为kmapsize
+            FieldDefinition cellmapsysfield = cellmapSystemType.Fields[0];
+            //debug;列举字段；
+            Console.WriteLine("Field type: " + cellmapsysfield.FieldType.FullName + " " + cellmapsysfield.Name);
+            //获取泛型参数定义；
+            GenericParameter tg = cellmapSystemType.GenericParameters[0];
+            //debug;列举泛型参数；
+            Console.WriteLine("Parameters type: " + tg.FullName);
+            //实例化泛型类；
+            GenericInstanceType of_tg = new GenericInstanceType(cellmapSystemType);
+            //指定实例化泛型类的参数；
+            of_tg.GenericArguments.Add(tg);
+            //获取实例化泛型类的字段引用；
+            FieldReference field_of_tg = new FieldReference(cellmapsysfield.Name, cellmapsysfield.FieldType) { DeclaringType = of_tg };
+            //获取所有方法定义；..cctor前面已定义；
+            //MethodDefinition method_GetData = cellmapSystemType.Methods[4];
+            //MethodDefinition method_GetCellCenter1 = cellmapSystemType.Methods[7];
+            //MethodDefinition method_GetCellCenter2 = cellmapSystemType.Methods[9];
+            //Console.WriteLine("Method type: " + method_GetData.FullName);
+            //Console.WriteLine("Method type: " + method_GetCellCenter1.FullName);
+            //Console.WriteLine("Method type: " + method_GetCellCenter2.FullName);
+            //获取方法IL;
+            //实例化中修改cctor；
+            if (cellmapsys_cctor != null)
+            {
+                ILProcessor ilProcessor0 = cellmapsys_cctor.Body.GetILProcessor();
+                Instruction ldci4 = cellmapsys_cctor.Body.Instructions.FirstOrDefault(i => i.OpCode.Code == OpCodes.Ldc_I4.Code);
+                Instruction stsfld = cellmapsys_cctor.Body.Instructions.FirstOrDefault(i
+=> i.OpCode.Code == OpCodes.Stsfld.Code);
+                ilProcessor0.Replace(ldci4, ilProcessor0.Create(OpCodes.Ldc_I4,
+                    57344));
+                ilProcessor0.Replace(stsfld, ilProcessor0.Create(OpCodes.Stsfld,
+                    field_of_tg));
+                //此处是否更改为Ldsfld;
+                Console.WriteLine("cctor: " + cellmapsys_cctor.Body.Instructions.First());
+                Console.WriteLine("cctor: " + ldci4.Operand);
+                logSource.LogInfo($"target method {cellmapsys_cctor} for patching");
+                // Add new instructions or logic as needed
+            }
+
         }//prepatch method;
 
     }//patcher class;

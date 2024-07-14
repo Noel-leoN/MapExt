@@ -105,7 +105,7 @@ namespace MapExt.Systems
 
             public void Execute(int index)
             {
-                float3 cellCenter = CellMapSystem<LandValueCell>.GetCellCenter(index, LandValueSystem.kTextureSize);
+                float3 cellCenter = CellMapSystemRe.GetCellCenter(index, LandValueSystem.kTextureSize);
                 if (WaterUtils.SampleDepth(ref this.m_WaterSurfaceData, cellCenter) > 1f)
                 {
                     this.m_LandValueMap[index] = new LandValueCell

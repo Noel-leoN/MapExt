@@ -102,7 +102,7 @@ namespace MapExt.Systems
 
             public void Execute(int index)
             {
-                float3 cellCenter = CellMapSystem<AvailabilityInfoCell>.GetCellCenter(index, AvailabilityInfoToGridSystem.kTextureSize);
+                float3 cellCenter = CellMapSystemRe.GetCellCenter(index, AvailabilityInfoToGridSystem.kTextureSize);
                 NetIterator netIterator = default(NetIterator);
                 netIterator.m_TotalWeight = default(AvailabilityInfoCell);
                 netIterator.m_Result = default(AvailabilityInfoCell);
@@ -169,7 +169,7 @@ namespace MapExt.Systems
             availabilityInfoToGridJob.m_AvailabilityInfoMap = base.m_Map;
             availabilityInfoToGridJob.m_AvailabilityData = this.__TypeHandle.__Game_Net_ResourceAvailability_RO_BufferLookup;
             availabilityInfoToGridJob.m_EdgeGeometryData = this.__TypeHandle.__Game_Net_EdgeGeometry_RO_ComponentLookup;
-            availabilityInfoToGridJob.m_CellSize = (float)CellMapSystem<AvailabilityInfoCell>.kMapSize / (float)AvailabilityInfoToGridSystem.kTextureSize;
+            availabilityInfoToGridJob.m_CellSize = (float)CellMapSystemRe.kMapSize / (float)AvailabilityInfoToGridSystem.kTextureSize;
             AvailabilityInfoToGridJob jobData = availabilityInfoToGridJob;
             base.Dependency = IJobParallelForExtensions.Schedule(jobData, AvailabilityInfoToGridSystem.kTextureSize * AvailabilityInfoToGridSystem.kTextureSize, AvailabilityInfoToGridSystem.kTextureSize, JobHandle.CombineDependencies(dependencies, JobHandle.CombineDependencies(base.m_WriteDependencies, base.m_ReadDependencies, base.Dependency)));
             base.AddWriter(base.Dependency);
