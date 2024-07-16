@@ -2523,7 +2523,7 @@ namespace MapExt.Systems
 				TrafficAmbienceEffect item;
 				while (this.m_EffectsQueue.TryDequeue(out item))
 				{
-					int2 cell = CellMapSystem<TrafficAmbienceCell>.GetCell(item.m_Position, CellMapSystem<TrafficAmbienceCell>.kMapSize, TrafficAmbienceSystem.kTextureSize);
+					int2 cell = CellMapSystemRe.GetCell(item.m_Position, CellMapSystemRe.kMapSize, TrafficAmbienceSystem.kTextureSize);
 					if (cell.x >= 0 && cell.y >= 0 && cell.x < TrafficAmbienceSystem.kTextureSize && cell.y < TrafficAmbienceSystem.kTextureSize)
 					{
 						int index = cell.x + cell.y * TrafficAmbienceSystem.kTextureSize;

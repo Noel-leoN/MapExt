@@ -72,11 +72,28 @@ namespace MapExt
             ///Postfix mode;
             updateSystem.UpdateAfter<Systems.AreaToolSystem, Game.Tools.AreaToolSystem>(SystemUpdatePhase.ToolUpdate);
 
-            //TerrainSystem;WaterSystem;
+            //TerrainSystem;
             ///disabled if using preloader patcher;
+            ///
+
+            //Water-related Systems
+            ///should be compiled with modified gamedll;
+            ///下列系统被其他mod占用可能性不高；
+            updateSystem.World.GetOrCreateSystemManaged<FloodCheckSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.FloodCheckSystem>(SystemUpdatePhase.GameSimulation);
+
+            updateSystem.World.GetOrCreateSystemManaged<WaterDangerSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.WaterDangerSystem>(SystemUpdatePhase.GameSimulation);
+
+            updateSystem.World.GetOrCreateSystemManaged<WaterLevelChangeSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.WaterLevelChangeSystem>(SystemUpdatePhase.GameSimulation);
+
+            updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
 
             //CellMapSystem<T>;
             ///Prefix；
+            ///多数系统被其他mod占用可能性不高，除了LandValueSystem;
             updateSystem.World.GetOrCreateSystemManaged<AirPollutionSystem>().Enabled = false;
             updateSystem.UpdateAt<MapExt.Systems.AirPollutionSystem>(SystemUpdatePhase.GameSimulation);
 
@@ -137,6 +154,9 @@ namespace MapExt
             World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.AudioGroupingSystem>();
             updateSystem.UpdateAt<MapExt.Systems.AudioGroupingSystem>(SystemUpdatePhase.Modification2);
 
+
+            ///!The chances of this system being taken up by other mods are very high!;
+            ///Consider using Harmony Transpiler rewrites that one job ref for better compatibility
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<CarNavigationSystem>().Enabled = false;
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.CarNavigationSystem>();
             updateSystem.World.GetOrCreateSystemManaged<CarNavigationSystem>().Enabled = false;
@@ -192,6 +212,18 @@ namespace MapExt
             updateSystem.World.GetOrCreateSystemManaged<ZoneSpawnSystem>().Enabled = false;
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.ZoneSpawnSystem>();
             updateSystem.UpdateAt<MapExt.Systems.ZoneSpawnSystem>(SystemUpdatePhase.GameSimulation);
+
+            ///bc job ref static method (indirect calls mapsize)
+            ///not sure effect;
+            ///
+            //updateSystem.World.GetOrCreateSystemManaged<PowerPlantAISystem>().Enabled = false;
+            //updateSystem.UpdateAt<MapExt.Systems.PowerPlantAISystem>(SystemUpdatePhase.GameSimulation);
+
+            //updateSystem.World.GetOrCreateSystemManaged<TempWaterPumpingTooltipSystem>().Enabled = false;
+            //updateSystem.UpdateAt<MapExt.Systems.TempWaterPumpingTooltipSystem>(SystemUpdatePhase.GameSimulation);
+
+            //updateSystem.World.GetOrCreateSystemManaged<WaterPumpingStationAISystem>().Enabled = false;
+            //updateSystem.UpdateAt<MapExt.Systems.WaterPumpingStationAISystem>(SystemUpdatePhase.GameSimulation);
 
 
         }

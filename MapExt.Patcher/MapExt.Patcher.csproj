@@ -12,7 +12,7 @@
 		<AssemblyName>MapExt.Patcher</AssemblyName>
 		<RootNamespace>MapExtPreloader</RootNamespace>
 		<Description>57kmMap.Extend</Description>
-		<Version>1.0.0</Version>
+		<Version>1.0.2.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>
@@ -61,6 +61,9 @@
 	<ItemGroup>
 		<Compile Remove="CellMapSystemPatchers - 复制.cs" />
 		<Compile Remove="Plugin.cs" />
+		<Compile Remove="PrePatchers.cs" />
+		<Compile Remove="PrePatchers16k.cs" />
+		<Compile Remove="PrePatchers8k.cs" />
 		<Compile Remove="StaticLogger.cs" />
 	</ItemGroup>
 
