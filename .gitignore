@@ -373,3 +373,15 @@ FodyWeavers.xsd
 /MapExt.PDX/SystemCellSim/TrafficAmbienceSystem.cs
 /MapExt.PDX/SystemCellSim/ZoneAmbienceSystem.cs
 /MapExt.PDX/MapExtDebug.cs
+/MapExt.Patcher/CellMapSystemPatchers - 复制.cs
+/MapExt.Patcher/PrePatchers.cs
+/MapExt.Patcher/PrePatchers16k.cs
+/MapExt.Patcher/PrePatchers8k.cs
+/MapExt.PDX/Patches/MethodRedir.cs
+/MapExt.PDX/SystemCellSim/GroundPollutionSystem.cs
+/MapExt.PDX/SystemCellSim/GroundWaterSystem.cs
+/MapExt.PDX/SystemCellSim/NaturalResourceSystem.cs
+/MapExt.PDX/SystemCellSim/NoisePollutionSystem.cs
+/MapExt.PDX/SystemCellSim/TrafficAmbienceSystem.cs
+/MapExt.PDX/SystemCellSim/ZoneAmbienceSystem.cs
+/MapExt.PDX/MapExtDebug.cs
