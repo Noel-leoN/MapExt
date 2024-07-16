@@ -88,8 +88,8 @@ namespace MapExt
             updateSystem.World.GetOrCreateSystemManaged<WaterLevelChangeSystem>().Enabled = false;
             updateSystem.UpdateAt<MapExt.Systems.WaterLevelChangeSystem>(SystemUpdatePhase.GameSimulation);
 
-            updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
-            updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
+            //updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
+            //updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
 
             //CellMapSystem<T>;
             ///Prefix；

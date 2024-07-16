@@ -29,6 +29,7 @@
 	  <Compile Remove="SystemCellSim\NoisePollutionSystem.cs" />
 	  <Compile Remove="SystemCellSim\TrafficAmbienceSystem.cs" />
 	  <Compile Remove="SystemCellSim\ZoneAmbienceSystem.cs" />
+	  <Compile Remove="SystemWater\WeatherAudioSystem.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

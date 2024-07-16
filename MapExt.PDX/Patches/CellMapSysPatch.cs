@@ -1260,4 +1260,18 @@ namespace MapExt.Patches
 
     }
 
+
+    [HarmonyPatch]
+    internal static class WaterLevelChangeSystemPatch
+    {
+        [HarmonyPatch(typeof(WaterLevelChangeSystem), "TsunamiEndDelay",MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool TsunamiEndDelay(WaterLevelChangeSystem __instance,ref int __result)
+        {
+            __result = Mathf.RoundToInt(57344 / WaterSystem.WaveSpeed);
+            return false;
+        }        
+    }//class;
+
+
 }//namespace
