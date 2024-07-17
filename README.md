@@ -19,8 +19,8 @@
 ## Usage
 
 - create map in game editor manually or import 57.344km heightmap and 229.376km worldmap. (or any size you want but it scales)
-- Currently only 4096x4096 grayscale images are supported.(Theoretically 16384x16384 should be fine, This is just for better performance and easier access to get heightmaps, As well as I haven't tested it yet)
-- default heightmapscale change from 4096 to 16384 for a larger height range ,you can manually change it in Editor.
+- Currently 4096x4096 16bit grayscale images are supported.(Theoretically 8192x8192 should be fine (16384 not work currently), This is just for better performance and easier access to get heightmaps, As well as I haven't tested it yet)
+- default heightmapscale change from 4096 to 8192 for a larger height range ,you can manually change it in Editor.
 
 ## Compatibility
 
@@ -30,6 +30,8 @@
 	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
 
 ## Changelog
+- 1.0.2.0
+    	- fix water-related systems.
 - 1.0.1.1
 	- Minor fix.
 
