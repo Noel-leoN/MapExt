@@ -23,11 +23,12 @@
 - default heightmapscale change from 4096 to 8192 for a larger height range ,you can manually change it in Editor.
 
 ## Compatibility
-
+The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
 - Modifies:
-	- maptile/areatool system.
-	- .cctor of water/terrain system.
-	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.
+	- maptile/areatool system.(postfix)
+	- .cctor of water/terrain system.(preloader)
+ 	- some water-related systems.(replace)
+	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.(replace)
 
 ## Changelog
 - 1.0.2.0
