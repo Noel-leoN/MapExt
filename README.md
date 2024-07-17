@@ -65,6 +65,7 @@ The current solution is mainly to replace the burst job system that references m
 - May not be compatible with some mods.
 - Repeatedly replicate the overlayinfomation of the playable area to the scope of the world map, its a vanilla bug, hasn't been fixed yet, so please ignore it for now, or don't use too much zoom out.
 - a few simulation systems may not be working properly,such as water pumping/tempwater powerstation.
+- Water Feature Mod needs to override the "mapextend" constant specified inside it in order to work properly.
 - If you found issues please report in github, thank you.
 
 ## Disclaimer
