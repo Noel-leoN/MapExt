@@ -40,9 +40,6 @@ The current solution is mainly to replace the burst job system that references m
     - fix water-related systems.
   	- add 229km^2 version for test. 
 
-    - fix water-related systems.
-  	- add 229km^2 version for test. 
-	
 - 1.0.1.1
 	- Minor fix.
 
