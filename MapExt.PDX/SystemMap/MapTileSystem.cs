@@ -50,8 +50,8 @@ namespace MapExt.Systems
 				//bounds.min = (float2)@int * 623.3043f - @float;
 				//bounds.max = (float2)(@int + 1) * 623.3043f - @float;
 				///mod;
-                int2 @int = new int2(index % 92, index / 92);
-                float2 @float = new float2(92f, 92f) * 311.652161f;
+                int2 @int = new int2(index % 368, index / 368);
+                float2 @float = new float2(368f, 368f) * 311.652161f;
                 Bounds2 bounds = default(Bounds2);
                 bounds.min = ((float2)@int * 623.3043f - @float);
                 bounds.max = ((float2)(@int + 1) * 623.3043f- @float);

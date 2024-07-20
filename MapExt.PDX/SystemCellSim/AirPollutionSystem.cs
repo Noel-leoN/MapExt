@@ -144,7 +144,7 @@ namespace MapExt.Systems
             dependencies = (readOnly ? this.m_WriteDependencies : JobHandle.CombineDependencies(this.m_ReadDependencies, this.m_WriteDependencies));
             CellMapData<AirPollution> result = default(CellMapData<AirPollution>);
             result.m_Buffer = this.m_Map;
-            result.m_CellSize = 57344 / (float2)this.m_TextureSize;
+            result.m_CellSize = CellMapSystemRe.kMapSize / (float2)this.m_TextureSize;
             result.m_TextureSize = this.m_TextureSize;
 
             //debug;

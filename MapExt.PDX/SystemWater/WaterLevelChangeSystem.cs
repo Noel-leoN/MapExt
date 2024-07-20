@@ -127,7 +127,7 @@ namespace MapExt.Systems
 
 		private TypeHandle __TypeHandle;
 
-		public static int TsunamiEndDelay => Mathf.RoundToInt(57344 / WaterSystem.WaveSpeed);
+		public static int TsunamiEndDelay => Mathf.RoundToInt(CellMapSystemRe.kMapSize / WaterSystem.WaveSpeed);
 
 		public override int GetUpdateInterval(SystemUpdatePhase phase)
 		{
@@ -136,7 +136,7 @@ namespace MapExt.Systems
 
 		public static uint GetMinimumDelayAt(WaterLevelChange change, float3 position)
 		{
-			float2 @float = 57344 / 2 * new float2(math.cos(0f - change.m_Direction.x), math.sin(0f - change.m_Direction.y));
+			float2 @float = CellMapSystemRe.kMapSize / 2 * new float2(math.cos(0f - change.m_Direction.x), math.sin(0f - change.m_Direction.y));
 			float2 float2 = new float2(change.m_Direction.y, 0f - change.m_Direction.x);
 			float2 float3 = math.dot(float2, position.xz - @float) * float2;
 			return (uint)Mathf.RoundToInt(math.length(position.xz - @float - float3) / WaterSystem.WaveSpeed);

@@ -18,25 +18,26 @@ namespace MapExt.Patches
     /// </summary>
     public static class CellMapStatic
     {
+        public static int kMapSize = 229376;
         public static float3 GetCellCenter(int index, int textureSize)
         {
             int num = index % textureSize;
             int num2 = index / textureSize;
-            int num3 = 57344 / textureSize;
-            return new float3(-0.5f * 57344 + ((float)num + 0.5f) * (float)num3, 0f, -0.5f * 57344 + ((float)num2 + 0.5f) * (float)num3);
+            int num3 = kMapSize / textureSize;
+            return new float3(-0.5f * kMapSize + ((float)num + 0.5f) * (float)num3, 0f, -0.5f * kMapSize + ((float)num2 + 0.5f) * (float)num3);
         }
 
         public static float3 GetCellCenter2(int2 cell, int textureSize)
         {
-            int num = 57344 / textureSize;
-            return new float3(-0.5f * (float)57344 + ((float)cell.x + 0.5f) * (float)num, 0f, -0.5f * (float)57344 + ((float)cell.y + 0.5f) * (float)num);
+            int num = kMapSize / textureSize;
+            return new float3(-0.5f * (float)kMapSize + ((float)cell.x + 0.5f) * (float)num, 0f, -0.5f * (float)kMapSize + ((float)cell.y + 0.5f) * (float)num);
         }
         public static Bounds3 GetCellBounds(int index, int textureSize)
         {
             int num = index % textureSize;
             int num2 = index / textureSize;
-            int num3 = 57344 / textureSize;
-            return new Bounds3(new float3(-0.5f * 57344 + (float)(num * num3), -100000f, -0.5f * 57344 + (float)(num2 * num3)), new float3(-0.5f * 57344 + ((float)num + 1f) * (float)num3, 100000f, -0.5f * 57344 + ((float)num2 + 1f) * (float)num3));
+            int num3 = kMapSize / textureSize;
+            return new Bounds3(new float3(-0.5f * kMapSize + (float)(num * num3), -100000f, -0.5f * kMapSize + (float)(num2 * num3)), new float3(-0.5f * kMapSize + ((float)num + 1f) * (float)num3, 100000f, -0.5f * kMapSize + ((float)num2 + 1f) * (float)num3));
         }
 
         public static float2 GetCellCoords(float3 position, int mapSize, int textureSize)
@@ -422,7 +423,7 @@ namespace MapExt.Patches
         {
             if (__instance.GetType().FullName == nameof(NaturalResourceSystem))
             {
-                float2 @float = 57344 / (float2)__instance.TextureSize;
+                float2 @float = CellMapSystemStatic.kMapSize / (float2)__instance.TextureSize;
                 __result = amount * @float.x * @float.y / 10000f;
                 return false;
             }
@@ -1180,7 +1181,7 @@ namespace MapExt.Patches
         public static void GetCellCenter(ref float3 __result, int index)
         {
             int3 @int = new int3(index % WindSimulationSystem.kResolution.x, index / WindSimulationSystem.kResolution.x % WindSimulationSystem.kResolution.y, index / (WindSimulationSystem.kResolution.x * WindSimulationSystem.kResolution.y));
-            float3 result = 57344 * new float3(((float)@int.x + 0.5f) / (float)WindSimulationSystem.kResolution.x, 0f, ((float)@int.y + 0.5f) / (float)WindSimulationSystem.kResolution.y) - 57344 / 2;
+            float3 result = CellMapStatic.kMapSize * new float3(((float)@int.x + 0.5f) / (float)WindSimulationSystem.kResolution.x, 0f, ((float)@int.y + 0.5f) / (float)WindSimulationSystem.kResolution.y) - CellMapStatic.kMapSize / 2;
             result.y = 100f + 1024f * ((float)@int.z + 0.5f) / (float)WindSimulationSystem.kResolution.z;
             __result = result;
         }
@@ -1268,7 +1269,7 @@ namespace MapExt.Patches
         [HarmonyPrefix]
         public static bool TsunamiEndDelay(WaterLevelChangeSystem __instance,ref int __result)
         {
-            __result = Mathf.RoundToInt(57344 / WaterSystem.WaveSpeed);
+            __result = Mathf.RoundToInt(CellMapStatic.kMapSize / WaterSystem.WaveSpeed);
             return false;
         }        
     }//class;

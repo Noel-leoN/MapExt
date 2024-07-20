@@ -12,16 +12,31 @@
 ## Install
 
 - install BepInEx 5.4.21 to you game root, run the game once then exit.
-- unzip the release zip file.then you get MapExt.PDX folder(1 file in itï¼‰ and MapExt.Patch folderï¼ˆ5 files).
+<<<<<<< HEAD
+- unzip the release zip file.then you get MapExt.PDX folder(1 file in itï¼?and MapExt.Patch folderï¼? files).
+=======
+- unzip the release zip file.then you get MapExt.PDX folder(1 file in it£© and MapExt.Patch folder£¨5 files).
+>>>>>>> update 229km version
 - put MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\YouCountName\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
 - put MapExt.Patch folder to BepInEx\patchers folder. (not \plungins !)
 
 ## Usage
-
+For 57km^2 version(more stable):
 - create map in game editor manually or import 57.344km heightmap and 229.376km worldmap. (or any size you want but it scales)
+<<<<<<< HEAD
 - Currently 4096x4096 16bit grayscale images are supported.(Theoretically 8192x8192 should be fine (16384 not work currently), This is just for better performance and easier access to get heightmaps, As well as I haven't tested it yet)
 - default heightmapscale change from 4096 to 8192 for a larger height range ,you can manually change it in Editor.
 
+=======
+
+For 229km^2 version(unstable):
+- create map in game editor manually or import 229.376km heightmap and 917.504km worldmap(recommand not to import the worldmap). (or any size you want but it scales)
+
+- Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image are supported.(16384 not work currently)
+
+- default heightmapscale change from 4096 to 8192 for a larger height range ,you can manually change it in Editor.
+
+>>>>>>> update 229km version
 ## Compatibility
 The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
 - Modifies:
@@ -32,8 +47,14 @@ The current solution is mainly to replace the burst job system that references m
 
 ## Changelog
 - 1.0.2.0
+<<<<<<< HEAD
     	- fix water-related systems.
   	- add 229km^2 version for test. 
+=======
+    - fix water-related systems.
+  	- add 229km^2 version for test. 
+	
+>>>>>>> update 229km version
 - 1.0.1.1
 	- Minor fix.
 
@@ -60,7 +81,7 @@ The current solution is mainly to replace the burst job system that references m
 	- Original version.  
   
 ## Notes
- - Bugs with all vanilla maps, and you have to use a custom 57km*57km map.
+ - Bugs with all vanilla maps, and you have to use a custom 57km*57km(or larger) map.
 
 ## Issues
 - May not be compatible with some mods.
@@ -83,4 +104,4 @@ The current solution is mainly to replace the burst job system that references m
 - [BepInEx](https://github.com/BepInEx/BepInEx): Unity / XNA game patcher and plugin framework.
 - [Harmony](https://github.com/pardeike/Harmony): A library for patching, replacing and decorating .NET and Mono methods during runtime.
 - [CSLBBS](https://www.cslbbs.net): A chinese Cities: Skylines 2 community.
-- [Discord](https://discord.gg/ABrJqdZJNE): Cities 2 Modding
+- [Discord](https://discord.gg/ABrJqdZJNE): Cities 2 Modding (in testing channel https://discord.com/channels/1169011184557637825/1252265608607961120)

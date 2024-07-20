@@ -186,7 +186,7 @@ namespace MapExt.Systems
 				float num3 = WaterSystem.WaveSpeed * 60f;
 				float num4 = num * num3;
 				float min = num4 - num2 * num3;
-				float2 @float = 57344 / 2 * -waterLevelChange.m_Direction;
+				float2 @float = CellMapSystemRe.kMapSize / 2 * -waterLevelChange.m_Direction;
 				Line2 startLine = new Line2(@float, @float + MathUtils.Right(waterLevelChange.m_Direction));
 				Bounds1 predictionDistance = new Bounds1(min, num4);
 				predictionDistance.max += value * num3;

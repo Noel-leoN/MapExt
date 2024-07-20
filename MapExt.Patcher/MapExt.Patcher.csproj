@@ -63,7 +63,7 @@
 		<Compile Remove="Plugin.cs" />
 		<Compile Remove="PrePatchers.cs" />
 		<Compile Remove="PrePatchers16k.cs" />
-		<Compile Remove="PrePatchers8k.cs" />
+		<Compile Remove="PrePatchers4k.cs" />
 		<Compile Remove="StaticLogger.cs" />
 	</ItemGroup>
 

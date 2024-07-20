@@ -138,7 +138,7 @@ namespace MapExt.Systems
 							float num4 = WaterSystem.WaveSpeed * 60f;
 							float num5 = num2 * num4;
 							float num6 = num5 - num3 * num4;
-							float2 @float = 57344 / 2 * -waterLevelChange.m_Direction;
+							float2 @float = CellMapSystemRe.kMapSize / 2 * -waterLevelChange.m_Direction;
 							float t;
 							float num7 = MathUtils.Distance(new Line2(@float, @float + MathUtils.Right(waterLevelChange.m_Direction)), position.xz, out t);
 							float num8 = math.lerp(num5, num6, 0.5f);
