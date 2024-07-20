@@ -33,6 +33,7 @@ The current solution is mainly to replace the burst job system that references m
 ## Changelog
 - 1.0.2.0
     	- fix water-related systems.
+  	- add 229km^2 version for test. 
 - 1.0.1.1
 	- Minor fix.
 
