@@ -387,3 +387,4 @@ FodyWeavers.xsd
 /MapExt.PDX/MapExtDebug.cs
 /MapExt.Patcher/TerrainFinal.cs
 /MapExt.Patcher/TerrainFinal.cs
+/MapExt.PDX/Patches/TerrainSysPatch.cs
