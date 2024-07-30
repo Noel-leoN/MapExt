@@ -67,7 +67,7 @@ namespace MapExtPreloader
                 {
                     if (ins.OpCode == OpCodes.Ldc_I4 && (int)ins.Operand == 14336)
                     {
-                        ins.Operand = 229376;
+                        ins.Operand = 57344;
 
                         Console.WriteLine("  L_{0}: {1} {2}", ins.Offset.ToString("x4"), ins.OpCode.Name, ins.Operand is String ? String.Format("\"{0}\"", ins.Operand) : ins.Operand);
                     }
@@ -117,7 +117,7 @@ namespace MapExtPreloader
                 Instruction stsfld = cellmapsys_cctor.Body.Instructions.FirstOrDefault(i
 => i.OpCode.Code == OpCodes.Stsfld.Code);
                 ilProcessor0.Replace(ldci4, ilProcessor0.Create(OpCodes.Ldc_I4,
-                    229376));
+                    57344));
                 ilProcessor0.Replace(stsfld, ilProcessor0.Create(OpCodes.Stsfld,
                     field_of_tg));
                 //此处是否更改为Ldsfld;
