@@ -50,11 +50,11 @@ namespace MapExt.Systems
 				//bounds.min = (float2)@int * 623.3043f - @float;
 				//bounds.max = (float2)(@int + 1) * 623.3043f - @float;
 				///mod;
-                int2 @int = new int2(index % 368, index / 368);
-                float2 @float = new float2(368f, 368f) * 311.652161f;
+                int2 @int = new int2(index % 23, index / 23);
+                float2 @float = new float2(23f, 23f) * 1246.608644f;
                 Bounds2 bounds = default(Bounds2);
-                bounds.min = ((float2)@int * 623.3043f - @float);
-                bounds.max = ((float2)(@int + 1) * 623.3043f- @float);
+                bounds.min = ((float2)@int * 2493.217288f - @float);
+                bounds.max = ((float2)(@int + 1) * 2493.217288f - @float);
 
                 dynamicBuffer.ResizeUninitialized(4);
 				dynamicBuffer[0] = new Node(new float3(bounds.min.x, 0f, bounds.min.y), float.MinValue);
@@ -188,8 +188,8 @@ namespace MapExt.Systems
 				Entity entity = nativeArray[0];
 				AreaData componentData = base.EntityManager.GetComponentData<AreaData>(entity);
 				///mod;
-				//int entityCount = 529;
-				int entityCount = 8464;
+				//int entityCount = 529;//mod=8464;
+				int entityCount = 529;
 				///
 				NativeArray<Entity> entities = base.EntityManager.CreateEntity(componentData.m_Archetype, entityCount, Allocator.TempJob);
 				if (!editorMode)
@@ -224,7 +224,7 @@ namespace MapExt.Systems
 
 		private void AddOwner(int2 tile, NativeArray<Entity> entities)
 		{
-			int index = tile.y * 92 + tile.x;//vanilla=23;
+			int index = tile.y * 23 + tile.x;//vanilla=23;mod=92;
 			base.EntityManager.RemoveComponent<Native>(entities[index]);
 			ref NativeList<Entity> startTiles = ref this.m_StartTiles;
 			Entity value = entities[index];

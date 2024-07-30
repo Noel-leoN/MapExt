@@ -68,25 +68,25 @@ namespace MapExtPreloader
                             Console.WriteLine("TerrainSys_MapSize set to " + ins.Operand);
                         }
                         ///optional!!!
-                        //kDefaultHeightScale;
+                        //kDefaultHeightScale;vanilla max value is 10000f;
                         if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 4096f)
                         {
                             //ins.Operand = 8192f;
                             //Console.WriteLine("TerrainSys_DefaultHeightScale set to " + ins.Operand);
                         }
 
-                        ///test!!!change heightmap resolution to 16kx16k or 8kx8k greysale from 4k
+                        ///tested to work!!!change heightmap resolution to 16kx16k or 8kx8k greysale from 4k
                         if (ins.OpCode.Name == "ldc.i4" && (int)ins.Operand == 4096)
                         {
                             //ins.Operand = 16384;//cannot work due to "SetDefaultHeights" limited;
                             ins.Operand = 8192;
                         }
 
-                        ///Test!!!kDefaultWorldSize EQUALS to playable area size;
+                        ///Optional!!!kDefaultWorldSize EQUALS to playable area size;
                         ///使可玩地图与世界地图等大；
                         if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 4f)
                         {
-                            ins.Operand = 1f;
+                            //ins.Operand = 1f;
                         }
 
                     }
@@ -118,15 +118,14 @@ namespace MapExtPreloader
                 foreach (MethodDefinition method in terrainSystem.Methods)
                 {
                     //Console.WriteLine(method.Name);
-                    //method.IsPublic = true;
+                    //method.IsPublic = true;//be care for use this;
 
 
                     //GetTerrainBounds;referenced by 1 system
                     if (method.Name == "GetTerrainBounds")
-
                     //if (terrainsys_bounds != null)
                     {
-                        // Modify the content of the static constructor
+                        // Modify the content of the method
                         foreach (Instruction ins in method.Body.Instructions)
                         {
                             if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 14336f)
@@ -141,7 +140,7 @@ namespace MapExtPreloader
                     //GetHeightData;referenced by a lot of systems!!!;
                     if (method.Name == "GetHeightData")
                     {
-                        // Modify the content of the static constructor
+                        // Modify the content of the method
                         foreach (Instruction ins in method.Body.Instructions)
                         {
                             if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 14336f)
@@ -157,7 +156,7 @@ namespace MapExtPreloader
 
                     if (method.Name == "FinalizeTerrainData")
                     {
-                        // Modify the content of the static constructor
+                        // Modify the content of the method
                         foreach (Instruction ins in method.Body.Instructions)
                         {
                         //TerrainMinMaxInit;
@@ -170,17 +169,13 @@ namespace MapExtPreloader
                             {
                                 //ins.Operand = 8192;
                             }
-
-
                         }
-
-
                         // Add new instructions or logic as needed
                         //logSource.LogInfo($"target method {method} for patching");
 
                         //optional: make FinalizeTerrainData public for easy harmony;                       
                             
-                            logSource.LogInfo($"target method {method} make public");                     
+                        //logSource.LogInfo($"target method {method} make public");                     
                     }//method FinalizeTerrainData;
 
                     //For Test;
@@ -198,9 +193,7 @@ namespace MapExtPreloader
 
                 }//Terrain methods;
 
-
-
-            }
+            }//Terrain System Patcher;
 
             ///AreaToolSystem;debug only for burst-disable-compile playmode;
             ///效果未明，可能影响地图区块构建；
@@ -246,7 +239,7 @@ namespace MapExtPreloader
                         {
                             ins.Operand = 57344;
                         }
-                        //water cellsize;
+                        //water cellsize;// 7f for 4096 res; 14f for 8192 res;
                         if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 7f)
                         {
                             ins.Operand = 14f;
@@ -263,7 +256,7 @@ namespace MapExtPreloader
                     // Modify the content of the method
                     foreach (Instruction ins in watersys_TryInitTexture.Body.Instructions)
                     {
-                        //water m_TexSize;
+                        //water m_TexSize; //4096 for 8192 res; 2048 for 4096 res;
                         if (ins.OpCode.Name == "ldc.i4" && (int)ins.Operand == 2048)
                         {
                             ins.Operand = 4096;
@@ -271,8 +264,6 @@ namespace MapExtPreloader
                     }
                     // Add new instructions or logic as needed
                 }
-
-
                 logSource.LogInfo($"target method {watersys_cctor} patched");
 
 
@@ -297,9 +288,9 @@ namespace MapExtPreloader
                     }
                     // Add new instructions or logic as needed
                 }*/
-            }            
+            }//Water System Patcher;
 
-        }//prepatch method;
+        }//preloader patcher method;
 
     }//patcher class;
 

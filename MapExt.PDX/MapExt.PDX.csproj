@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <Compile Remove="MapExtDebug.cs" />
 	  <Compile Remove="Patches\MethodRedir.cs" />
+	  <Compile Remove="Patches\TerrainSysPatch.cs" />
 	  <Compile Remove="SystemCellSimRef\PowerPlantAISystem.cs" />
 	  <Compile Remove="SystemCellSimRef\TempWaterPumpingTooltipSystem.cs" />
 	  <Compile Remove="SystemCellSimRef\WaterPumpingStationAISystem.cs" />
@@ -42,6 +43,10 @@
 		<Reference Include="Colossal.Collections">
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="Game">
+		  <HintPath>..\..\..\..\Steam\steamapps\common\Cities Skylines II\BepInEx\DumpedAssemblies\Cities2\Game.dll</HintPath>
+		  <Private>False</Private>
+		</Reference>
 		
 		<Reference Include="UnityEngine.AudioModule">
 			<Private>false</Private>
@@ -56,9 +61,6 @@
 		<Reference Include="mscorlib">
 			<HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\mscorlib.dll</HintPath>			
 			<Private>False</Private>
-		</Reference>
-		<Reference Include="netstandard">
-			<Private>false</Private>
 		</Reference>
 
 		<Reference Include="Colossal.Core">
@@ -121,12 +123,6 @@
 		<PackageReference Include="BepInEx.Core" Version="5.4.21" IncludeAssets="compile" />
 	</ItemGroup>
 	-->
-
-	<ItemGroup>		
-		<Reference Include="libcs2/Game.dll" Private="False">
-		  <SpecificVersion>True</SpecificVersion>
-		</Reference>
-	</ItemGroup>
 
 
 </Project>

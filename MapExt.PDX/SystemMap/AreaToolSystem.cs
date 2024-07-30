@@ -1404,17 +1404,20 @@ namespace MapExt.Systems
                 int2 @int = default(int2);
                 @int.y = 0;
                 Bounds2 bounds = default(Bounds2);
-                while (@int.y < 368)//vanilla=23;
+                while (@int.y < 23)//vanilla=23;mod=92;
                 {
                     @int.x = 0;
-                    while (@int.x < 368)
+                    while (@int.x < 23)//vanilla=23;mod=92;
                     {
                         Entity e = this.m_CommandBuffer.CreateEntity();
                         CreationDefinition component = default(CreationDefinition);
                         component.m_Prefab = this.m_Prefab;
-                        float2 @float = new float2(368f, 368f) * 311.652161f;
-                        bounds.min = (float2)@int * 623.3043f - @float;
-                        bounds.max = (float2)(@int + 1) * 623.3043f - @float;
+                        //float2 @float = new float2(92f, 92f) * 311.652161f;//mod;
+                        //bounds.min = (float2)@int * 623.3043f - @float;
+                        //bounds.max = (float2)(@int + 1) * 623.3043f - @float;
+                        float2 @float = new float2(23f, 23f) * 1246.608644f;
+                        bounds.min = (float2)@int * 2493.217288f - @float;
+                        bounds.max = (float2)(@int + 1) * 2493.217288f - @float;
                         DynamicBuffer<Game.Areas.Node> dynamicBuffer = this.m_CommandBuffer.AddBuffer<Game.Areas.Node>(e);
                         dynamicBuffer.ResizeUninitialized(5);
                         dynamicBuffer[0] = new Game.Areas.Node(new float3(bounds.min.x, 0f, bounds.min.y), float.MinValue);

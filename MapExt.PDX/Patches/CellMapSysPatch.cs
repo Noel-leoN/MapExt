@@ -18,7 +18,7 @@ namespace MapExt.Patches
     /// </summary>
     public static class CellMapStatic
     {
-        public static int kMapSize = 229376;
+        public static int kMapSize = 57344;
         public static float3 GetCellCenter(int index, int textureSize)
         {
             int num = index % textureSize;
@@ -423,7 +423,7 @@ namespace MapExt.Patches
         {
             if (__instance.GetType().FullName == nameof(NaturalResourceSystem))
             {
-                float2 @float = CellMapSystemStatic.kMapSize / (float2)__instance.TextureSize;
+                float2 @float = CellMapStatic.kMapSize / (float2)__instance.TextureSize;
                 __result = amount * @float.x * @float.y / 10000f;
                 return false;
             }

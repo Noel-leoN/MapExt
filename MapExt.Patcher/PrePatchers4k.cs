@@ -62,8 +62,8 @@ namespace MapExtPreloader
                         //kDefaultHeightScale;
                         if (ins.OpCode.Name == "ldc.r4" && (float)ins.Operand == 4096f)
                         {
-                            ins.Operand = 8192f;
-                            Console.WriteLine("TerrainSys_DefaultHeightScale set to " + ins.Operand);
+                            //ins.Operand = 8192f;
+                            //Console.WriteLine("TerrainSys_DefaultHeightScale set to " + ins.Operand);
                         }
 
                         ///test!!!change heightmap resolution to 16kx16k or 8kx8k greysale from 4k

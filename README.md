@@ -20,12 +20,11 @@
 For 57km^2 version(more stable):
 - create map in game editor manually or import 57.344km heightmap and 229.376km worldmap. (or any size you want but it scales)
 
-For 229km^2 version(unstable):
+For 229km^2 version(under test):
 - create map in game editor manually or import 229.376km heightmap and 917.504km worldmap(recommand not to import the worldmap). (or any size you want but it scales)
 
 - Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image are supported.(16384 not work currently)
-
-- default heightmapscale change from 4096 to 8192 for a larger height range ,you can manually change it in Editor.
+- 
 
 ## Compatibility
 The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
@@ -36,6 +35,9 @@ The current solution is mainly to replace the burst job system that references m
 	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.(replace)
 
 ## Changelog
+- 1.0.2.3
+	- fix water system rendering bug in 8k heightmap resoluton version.
+
 - 1.0.2.0
     - fix water-related systems.
   	- add 229km^2 version for test. 

@@ -91,6 +91,9 @@ namespace MapExt
             //updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
             //updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
 
+            updateSystem.World.GetOrCreateSystemManaged<WaterSourceInitializeSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.WaterSourceInitializeSystem>(SystemUpdatePhase.ModificationEnd);
+
             //CellMapSystem<T>;
             ///Prefix；
             ///多数系统被其他mod占用可能性不高，除了LandValueSystem;

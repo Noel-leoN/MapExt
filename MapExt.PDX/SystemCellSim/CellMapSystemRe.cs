@@ -9,7 +9,7 @@ namespace MapExt
     public static class CellMapSystemRe
     {
         
-        public static readonly int kMapSize = 229376;
+        public static readonly int kMapSize = 57344;
         //protected JobHandle m_ReadDependencies;
         //protected JobHandle m_WriteDependencies;
         //protected NativeArray<T> m_Map;
@@ -23,22 +23,22 @@ namespace MapExt
         {
             int num = index % textureSize;
             int num2 = index / textureSize;
-            int num3 = kMapSize / textureSize;
-            return new float3(-0.5f * kMapSize + (num + 0.5f) * num3, 0f, -0.5f * kMapSize + (num2 + 0.5f) * num3);
+            int num3 = CellMapSystemRe.kMapSize / textureSize;
+            return new float3(-0.5f * CellMapSystemRe.kMapSize + (num + 0.5f) * num3, 0f, -0.5f * CellMapSystemRe.kMapSize + (num2 + 0.5f) * num3);
         }
         
         public static float3 GetCellCenter2(int2 cell, int textureSize)
         {
-            int num = kMapSize / textureSize;
-            return new float3(-0.5f * kMapSize + (cell.x + 0.5f) * num, 0f, -0.5f * kMapSize + (cell.y + 0.5f) * num);
+            int num = CellMapSystemRe.kMapSize / textureSize;
+            return new float3(-0.5f * CellMapSystemRe.kMapSize + (cell.x + 0.5f) * num, 0f, -0.5f * CellMapSystemRe.kMapSize + (cell.y + 0.5f) * num);
         }
 
         public static Bounds3 GetCellBounds(int index, int textureSize)
         {
             int num = index % textureSize;
             int num2 = index / textureSize;
-            int num3 = kMapSize / textureSize;
-            return new Bounds3(new float3(-0.5f * kMapSize + num * num3, -100000f, -0.5f * kMapSize + num2 * num3), new float3(-0.5f * kMapSize + (num + 1f) * num3, 100000f, -0.5f * kMapSize + (num2 + 1f) * num3));
+            int num3 = CellMapSystemRe.kMapSize / textureSize;
+            return new Bounds3(new float3(-0.5f * CellMapSystemRe.kMapSize + num * num3, -100000f, -0.5f * CellMapSystemRe.kMapSize + num2 * num3), new float3(-0.5f * CellMapSystemRe.kMapSize + (num + 1f) * num3, 100000f, -0.5f * CellMapSystemRe.kMapSize + (num2 + 1f) * num3));
         }
 
         public static float2 GetCellCoords(float3 position, int mapSize, int textureSize)

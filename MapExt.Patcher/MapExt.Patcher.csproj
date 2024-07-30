@@ -17,8 +17,7 @@
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>
 			https://api.nuget.org/v3/index.json;
-			https://nuget.bepinex.dev/v3/index.json;
-			https://nuget.samboy.dev/v3/index.json
+			https://nuget.bepinex.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
 		<!-- Copies references we make to 3rd party library for distributions -->
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -65,6 +64,7 @@
 		<Compile Remove="PrePatchers16k.cs" />
 		<Compile Remove="PrePatchers4k.cs" />
 		<Compile Remove="StaticLogger.cs" />
+		<Compile Remove="TerrainFinal.cs" />
 	</ItemGroup>
 
 	<!--
