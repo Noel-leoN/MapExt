@@ -385,3 +385,4 @@ FodyWeavers.xsd
 /MapExt.PDX/SystemCellSim/TrafficAmbienceSystem.cs
 /MapExt.PDX/SystemCellSim/ZoneAmbienceSystem.cs
 /MapExt.PDX/MapExtDebug.cs
+/MapExt.Patcher/TerrainFinal.cs
