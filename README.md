@@ -12,19 +12,18 @@
 ## Install
 
 - install BepInEx 5.4.21 to you game root, run the game once then exit.
-- unzip the release zip file.then you get MapExt.PDX folder(1 file) and MapExt.Patch folder(5 files).
-- put MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\YouCountName\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
-- put MapExt.Patch folder to BepInEx\patchers folder. (not \plungins !)
+- download and unzip the Release zip file, then you'll get MapExt.PDX folder(1 file) and MapExt.Patch folder(5 files).
+- copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
+- copy MapExt.Patch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
 
 ## Usage
 For 57km^2 version(more stable):
 - create map in game editor manually or import 57.344km heightmap and 229.376km worldmap. (or any size you want but it scales)
 
 For 229km^2 version(under test):
-- create map in game editor manually or import 229.376km heightmap and 917.504km worldmap(recommand not to import the worldmap). (or any size you want but it scales)
+- create map in game editor manually or import 229.376km heightmap and 917.504km worldmap(recommand only use heightmap for better performance). (or any size you want but it scales)
 
-- Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image are supported.(16384 not work currently)
-- 
+Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image (PNG or TIFF) are supported.(16384 not work currently) 
 
 ## Compatibility
 The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
@@ -35,9 +34,9 @@ The current solution is mainly to replace the burst job system that references m
 	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.(replace)
 
 ## Changelog
-- 1.0.2.3 (57km version)
+- 1.0.2.3 (57km or 229km with 8k resolution version)
 	- fix water system rendering bug in 8k heightmap resoluton version.
-	- change the total number of maptiles to 529. (4x size of vanilla maptile)
+	- change the total number of maptiles to 529 (8463 in 229km). (4x size of vanilla each maptile)
 
 - 1.0.2.0
     - fix water-related systems.
