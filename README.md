@@ -3,6 +3,7 @@
 ## Introduction
 
 - 57km^2 Extended Map (16x the size of the vanilla map)
+- 229km^2 Extended Map (256x size)
 
 ## Requirements
 
