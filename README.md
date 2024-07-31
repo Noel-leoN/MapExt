@@ -93,4 +93,4 @@ The current solution is mainly to replace the burst job system that references m
 - [Harmony](https://github.com/pardeike/Harmony): A library for patching, replacing and decorating .NET and Mono methods during runtime.
 - [CSLBBS](https://www.cslbbs.net): A chinese Cities: Skylines 2 community.
 - [Discord](https://discord.gg/ABrJqdZJNE): Cities 2 Modding (in testing channel https://discord.com/channels/1169011184557637825/1252265608607961120)
-- Thanks  Rebeccat, HideoKuze2501, Nulos, Jack the Stripper （in no particular order） and other good people who are not mentioned for the time being for the test!
+- Thanks  Rebeccat, HideoKuze2501, Nulos, Jack the Stripper （in no particular order） and other good people who are not mentioned above for the test!
