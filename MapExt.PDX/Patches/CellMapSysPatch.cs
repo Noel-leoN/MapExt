@@ -16,41 +16,6 @@ namespace MapExt.Patches
     /// <summary>
     /// 
     /// </summary>
-    public static class CellMapStatic
-    {
-        public static int kMapSize = 57344;
-        public static float3 GetCellCenter(int index, int textureSize)
-        {
-            int num = index % textureSize;
-            int num2 = index / textureSize;
-            int num3 = kMapSize / textureSize;
-            return new float3(-0.5f * kMapSize + ((float)num + 0.5f) * (float)num3, 0f, -0.5f * kMapSize + ((float)num2 + 0.5f) * (float)num3);
-        }
-
-        public static float3 GetCellCenter2(int2 cell, int textureSize)
-        {
-            int num = kMapSize / textureSize;
-            return new float3(-0.5f * (float)kMapSize + ((float)cell.x + 0.5f) * (float)num, 0f, -0.5f * (float)kMapSize + ((float)cell.y + 0.5f) * (float)num);
-        }
-        public static Bounds3 GetCellBounds(int index, int textureSize)
-        {
-            int num = index % textureSize;
-            int num2 = index / textureSize;
-            int num3 = kMapSize / textureSize;
-            return new Bounds3(new float3(-0.5f * kMapSize + (float)(num * num3), -100000f, -0.5f * kMapSize + (float)(num2 * num3)), new float3(-0.5f * kMapSize + ((float)num + 1f) * (float)num3, 100000f, -0.5f * kMapSize + ((float)num2 + 1f) * (float)num3));
-        }
-
-        public static float2 GetCellCoords(float3 position, int mapSize, int textureSize)
-        {
-            return (0.5f + position.xz / mapSize) * textureSize;
-        }
-
-        public static int2 GetCell(float3 position, int mapSize, int textureSize)
-        {
-            return (int2)math.floor((0.5f + position.xz / mapSize) * textureSize);
-        }
-
-    }    
 
     //AirPollution class;bc cell;
     [HarmonyPatch]
@@ -71,7 +36,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.AirPollutionSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.AirPollutionSystem.kTextureSize);
         }
 
         //cellmap method;instance;no cell       
@@ -142,7 +107,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.AvailabilityInfoToGridSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.AvailabilityInfoToGridSystem.kTextureSize);
            
         }
 
@@ -588,7 +553,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.PopulationToGridSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.PopulationToGridSystem.kTextureSize);
         }
 
         [HarmonyPatch(typeof(PopulationToGridSystem), nameof(PopulationToGridSystem.GetPopulation))]
@@ -656,7 +621,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.SoilWaterSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.SoilWaterSystem.kTextureSize);
         }
 
         [HarmonyPatch(typeof(SoilWaterSystem), "GetSoilWater")]
@@ -828,7 +793,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.TerrainAttractivenessSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.TerrainAttractivenessSystem.kTextureSize);
         }
 
         [HarmonyPatch(typeof(TerrainAttractivenessSystem), nameof(TerrainAttractivenessSystem.EvaluateAttractiveness),new Type[] {typeof(float),typeof(TerrainAttractiveness),typeof(AttractivenessParameterData) })]
@@ -980,7 +945,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {
-            __result = CellMapStatic.GetCellCenter(index, Systems.WindSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.WindSystem.kTextureSize);
         }
 
         [HarmonyPatch(typeof(WindSystem), "GetWind")]
@@ -1159,7 +1124,7 @@ namespace MapExt.Patches
         [HarmonyPostfix]
         public static void GetCellCenter(ref float3 __result, int index)
         {           
-            __result = CellMapStatic.GetCellCenter(index, Systems.LandValueSystem.kTextureSize);
+            __result = CellMapSystemRe.GetCellCenter(index, Systems.LandValueSystem.kTextureSize);
             
         }
 
@@ -1181,7 +1146,7 @@ namespace MapExt.Patches
         public static void GetCellCenter(ref float3 __result, int index)
         {
             int3 @int = new int3(index % WindSimulationSystem.kResolution.x, index / WindSimulationSystem.kResolution.x % WindSimulationSystem.kResolution.y, index / (WindSimulationSystem.kResolution.x * WindSimulationSystem.kResolution.y));
-            float3 result = CellMapStatic.kMapSize * new float3(((float)@int.x + 0.5f) / (float)WindSimulationSystem.kResolution.x, 0f, ((float)@int.y + 0.5f) / (float)WindSimulationSystem.kResolution.y) - CellMapStatic.kMapSize / 2;
+            float3 result = CellMapSystemRe.kMapSize * new float3(((float)@int.x + 0.5f) / (float)WindSimulationSystem.kResolution.x, 0f, ((float)@int.y + 0.5f) / (float)WindSimulationSystem.kResolution.y) - CellMapSystemRe.kMapSize / 2;
             result.y = 100f + 1024f * ((float)@int.z + 0.5f) / (float)WindSimulationSystem.kResolution.z;
             __result = result;
         }
@@ -1269,7 +1234,7 @@ namespace MapExt.Patches
         [HarmonyPrefix]
         public static bool TsunamiEndDelay(WaterLevelChangeSystem __instance,ref int __result)
         {
-            __result = Mathf.RoundToInt(CellMapStatic.kMapSize / WaterSystem.WaveSpeed);
+            __result = Mathf.RoundToInt(CellMapSystemRe.kMapSize / WaterSystem.WaveSpeed);
             return false;
         }        
     }//class;

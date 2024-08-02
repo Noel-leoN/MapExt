@@ -1486,7 +1486,7 @@ namespace MapExt.Systems
 						else
 						{
 							PrefabRef prefabRef3 = nativeArray7[m];
-							if ((this.m_PrefabNetLaneData[prefabRef3.m_Prefab].m_Flags & Game.Prefabs.LaneFlags.Underground) == 0)
+							if ((this.m_PrefabNetLaneData[prefabRef3.m_Prefab].m_Flags & LaneFlags.Underground) == 0)
 							{
 								Game.Objects.Color componentData5;
 								while (!this.m_ObjectColorData.TryGetComponent(owner2.m_Owner, out componentData5))

@@ -1784,7 +1784,7 @@ namespace MapExt.Systems
 								float laneOffset4 = VehicleUtils.GetLaneOffset(prefabObjectGeometryData, prefabLaneData4, 0f - currentLane.m_LanePosition);
 								if (this.MoveTarget(position, ref navigation.m_TargetPosition, num7, curve2.m_Bezier, curve3.m_Bezier, currentLane.m_ChangeProgress, ref currentLane.m_CurvePosition, laneOffset3, laneOffset4))
 								{
-									if ((prefabLaneData3.m_Flags & Game.Prefabs.LaneFlags.Twoway) == 0)
+									if ((prefabLaneData3.m_Flags & LaneFlags.Twoway) == 0)
 									{
 										currentLane.m_LaneFlags &= ~Game.Vehicles.CarLaneFlags.CanReverse;
 									}
@@ -1807,7 +1807,7 @@ namespace MapExt.Systems
 								num14 = math.select(num14, 0f - num14, currentLane.m_CurvePosition.z < currentLane.m_CurvePosition.x);
 								if (this.MoveTarget(position, ref navigation.m_TargetPosition, num7, curve4.m_Bezier, ref currentLane.m_CurvePosition, num14))
 								{
-									if ((prefabLaneData5.m_Flags & Game.Prefabs.LaneFlags.Twoway) == 0)
+									if ((prefabLaneData5.m_Flags & LaneFlags.Twoway) == 0)
 									{
 										currentLane.m_LaneFlags &= ~Game.Vehicles.CarLaneFlags.CanReverse;
 									}

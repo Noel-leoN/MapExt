@@ -58,7 +58,7 @@ namespace MapExt
             {
                 log.Info($"Patched method: {patchedMethod.Module.Name}:{patchedMethod.DeclaringType.Name}.{patchedMethod.Name}");
             }
-            
+
 
             ///系统替换&重用；
             //Disable vanilla systems & enable custom systems；
@@ -66,10 +66,12 @@ namespace MapExt
             ///地图系统；
             //MapTileSystem;
             ///Postfix mode;
+            //updateSystem.World.GetOrCreateSystemManaged<Game.Areas.MapTileSystem>().Enabled = false;
             updateSystem.UpdateAfter<PostDeserialize<Systems.MapTileSystem>, PostDeserialize<Game.Areas.MapTileSystem>>(SystemUpdatePhase.Deserialize);
 
             //AreaToolSystem;
             ///Postfix mode;
+            //updateSystem.World.GetOrCreateSystemManaged<AreaToolSystem>().Enabled = false;
             updateSystem.UpdateAfter<Systems.AreaToolSystem, Game.Tools.AreaToolSystem>(SystemUpdatePhase.ToolUpdate);
 
             //TerrainSystem;
@@ -88,8 +90,8 @@ namespace MapExt
             updateSystem.World.GetOrCreateSystemManaged<WaterLevelChangeSystem>().Enabled = false;
             updateSystem.UpdateAt<MapExt.Systems.WaterLevelChangeSystem>(SystemUpdatePhase.GameSimulation);
 
-            //updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
-            //updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
+            updateSystem.World.GetOrCreateSystemManaged<WeatherAudioSystem>().Enabled = false;
+            updateSystem.UpdateAt<MapExt.Systems.WeatherAudioSystem>(SystemUpdatePhase.Modification2);
 
             updateSystem.World.GetOrCreateSystemManaged<WaterSourceInitializeSystem>().Enabled = false;
             updateSystem.UpdateAt<MapExt.Systems.WaterSourceInitializeSystem>(SystemUpdatePhase.ModificationEnd);
@@ -169,51 +171,44 @@ namespace MapExt
             updateSystem.UpdateAt<MapExt.Systems.CarNavigationSystem>(SystemUpdatePhase.LoadSimulation);
             updateSystem.UpdateAfter<MapExt.Systems.CarNavigationSystem.Actions, MapExt.Systems.CarNavigationSystem>(SystemUpdatePhase.LoadSimulation);
 
-            //updateSystem.UpdateAfter<MapExt.Systems.CarNavigationSystem, CarNavigationSystem>(SystemUpdatePhase.GameSimulation);
-            //updateSystem.UpdateAfter<MapExt.Systems.CarNavigationSystem.Actions, CarNavigationSystem.Actions>(SystemUpdatePhase.GameSimulation);
-            //updateSystem.UpdateAfter<MapExt.Systems.CarNavigationSystem, CarNavigationSystem>(SystemUpdatePhase.LoadSimulation);
-            //updateSystem.UpdateAfter<MapExt.Systems.CarNavigationSystem.Actions, CarNavigationSystem.Actions>(SystemUpdatePhase.LoadSimulation);
-
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<GroundWaterPollutionSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<GroundWaterPollutionSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.GroundWaterPollutionSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.GroundWaterPollutionSystem>();
             updateSystem.UpdateAt<MapExt.Systems.GroundWaterPollutionSystem>(SystemUpdatePhase.GameSimulation);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<LandValueTooltipSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<LandValueTooltipSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.LandValueTooltipSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.LandValueTooltipSystem>();
             updateSystem.UpdateAt<MapExt.Systems.LandValueTooltipSystem>(SystemUpdatePhase.UITooltip);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<NetColorSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<NetColorSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.NetColorSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.NetColorSystem>();
             updateSystem.UpdateAt<MapExt.Systems.NetColorSystem>(SystemUpdatePhase.Rendering);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<NetPollutionSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<NetPollutionSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.NetPollutionSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.NetPollutionSystem>();
             updateSystem.UpdateAt<MapExt.Systems.NetPollutionSystem>(SystemUpdatePhase.GameSimulation);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<ObjectPolluteSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<ObjectPolluteSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.ObjectPolluteSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.ObjectPolluteSystem>();
             updateSystem.UpdateAt<MapExt.Systems.ObjectPolluteSystem>(SystemUpdatePhase.GameSimulation);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SpawnableAmbienceSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<SpawnableAmbienceSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.SpawnableAmbienceSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.SpawnableAmbienceSystem>();
             updateSystem.UpdateAt<MapExt.Systems.SpawnableAmbienceSystem>(SystemUpdatePhase.GameSimulation);
 
             //World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<WindSimulationSystem>().Enabled = false;
             updateSystem.World.GetOrCreateSystemManaged<WindSimulationSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.WindSimulationSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.WindSimulationSystem>();
             updateSystem.UpdateAt<MapExt.Systems.WindSimulationSystem>(SystemUpdatePhase.GameSimulation);
             updateSystem.UpdateAt<MapExt.Systems.WindSimulationSystem>(SystemUpdatePhase.EditorSimulation);
-            //updateSystem.UpdateAfter<Systems.WindSimulationSystem, WindSimulationSystem>(SystemUpdatePhase.GameSimulation);
-            //updateSystem.UpdateAfter<Systems.WindSimulationSystem, WindSimulationSystem>(SystemUpdatePhase.EditorSimulation);
 
             updateSystem.World.GetOrCreateSystemManaged<ZoneSpawnSystem>().Enabled = false;
-            //World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.ZoneSpawnSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<MapExt.Systems.ZoneSpawnSystem>();
             updateSystem.UpdateAt<MapExt.Systems.ZoneSpawnSystem>(SystemUpdatePhase.GameSimulation);
 
             ///bc job ref static method (indirect calls mapsize)

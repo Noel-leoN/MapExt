@@ -43,13 +43,13 @@ namespace MapExt.Systems
 				this.m_PrefabRefData[entity] = new PrefabRef(this.m_Prefab);
 				this.m_AreaData[entity] = new Area(AreaFlags.Complete);
 				DynamicBuffer<Node> dynamicBuffer = this.m_NodeData[entity];
-				///vanilla;
-				//int2 @int = new int2(index % 23, index / 23);
-				//float2 @float = new float2(23f, 23f) * 311.65216f;//v1.1.5f=311.652161f;
+				///vanilla;4倍数量
+				//int2 @int = new int2(index % 92, index / 92);
+				//float2 @float = new float2(92f, 92f) * 311.652161f;//v1.1.5f=311.652161f;
 				//Bounds2 bounds = default(Bounds2);
 				//bounds.min = (float2)@int * 623.3043f - @float;
 				//bounds.max = (float2)(@int + 1) * 623.3043f - @float;
-				///mod;
+				///mod;4倍块大小
                 int2 @int = new int2(index % 23, index / 23);
                 float2 @float = new float2(23f, 23f) * 1246.608644f;
                 Bounds2 bounds = default(Bounds2);
@@ -81,11 +81,11 @@ namespace MapExt.Systems
 			}
 		}
 
-		private const int LEGACY_GRID_WIDTH = 92;//vanilla:23
+		private const int LEGACY_GRID_WIDTH = 23;//vanilla:23
 
-		private const int LEGACY_GRID_LENGTH = 92;//vanilla:23
+		private const int LEGACY_GRID_LENGTH = 23;//vanilla:23
 
-		private const float LEGACY_CELL_SIZE = 623.3043f;
+		private const float LEGACY_CELL_SIZE = 2493.217288f;//not used indeed~
 
 		private EntityQuery m_PrefabQuery;
 

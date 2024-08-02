@@ -43,12 +43,12 @@ namespace MapExtPreloader
 
             ///改造CellMaSystem<T>；
             //optional: make cellmapsys fields public for easy harmony;
-            foreach (var field in cellmapSystemType.Fields)
-            {
-                field.IsPublic = true;
+            //foreach (var field in cellmapSystemType.Fields)
+            //{
+            //    field.IsPublic = true;
 
-                logSource.LogInfo($"cellmap field {field} patched");
-            }
+            //    logSource.LogInfo($"cellmap field {field} patched");
+            //}
 
             //foreach (MethodDefinition method in cellmapSystemType.Methods)
             //{
@@ -69,7 +69,7 @@ namespace MapExtPreloader
                     {
                         ins.Operand = 57344;
 
-                        Console.WriteLine("  L_{0}: {1} {2}", ins.Offset.ToString("x4"), ins.OpCode.Name, ins.Operand is String ? String.Format("\"{0}\"", ins.Operand) : ins.Operand);
+                        //Console.WriteLine("  L_{0}: {1} {2}", ins.Offset.ToString("x4"), ins.OpCode.Name, ins.Operand is String ? String.Format("\"{0}\"", ins.Operand) : ins.Operand);
                     }
                     //if (ins.OpCode == OpCodes.Stsfld)
                     //{
@@ -85,6 +85,7 @@ namespace MapExtPreloader
 
             }//cellmap block;
 
+            /*
             ///新方法1；增加泛型实例化；
             //cellmapsys method remake;
             //获取字段定义；0为kmapsize
@@ -126,6 +127,7 @@ namespace MapExtPreloader
                 logSource.LogInfo($"target method {cellmapsys_cctor} for patching");
                 // Add new instructions or logic as needed
             }
+            */
 
         }//prepatch method;
 

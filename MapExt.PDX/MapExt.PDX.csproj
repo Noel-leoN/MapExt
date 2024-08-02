@@ -7,7 +7,7 @@
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>9.0</LangVersion>
-		<Version>1.0.9.0</Version>
+		<Version>1.0.2.5</Version>
 		
 		<!--The file where mod information which is required for publishing mod on PDX mods are stored-->
 		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
@@ -30,7 +30,6 @@
 	  <Compile Remove="SystemCellSim\NoisePollutionSystem.cs" />
 	  <Compile Remove="SystemCellSim\TrafficAmbienceSystem.cs" />
 	  <Compile Remove="SystemCellSim\ZoneAmbienceSystem.cs" />
-	  <Compile Remove="SystemWater\WeatherAudioSystem.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -43,10 +42,6 @@
 		<Reference Include="Colossal.Collections">
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="Game">
-		  <HintPath>..\..\..\..\Steam\steamapps\common\Cities Skylines II\BepInEx\DumpedAssemblies\Cities2\Game.dll</HintPath>
-		  <Private>False</Private>
-		</Reference>
 		
 		<Reference Include="UnityEngine.AudioModule">
 			<Private>false</Private>
@@ -58,11 +53,9 @@
 			<Private>false</Private>
 		</Reference>
 
-		<Reference Include="mscorlib">
-			<HintPath>..\..\..\..\..\Games\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\mscorlib.dll</HintPath>			
-			<Private>False</Private>
+		<Reference Include="Game">
+			<Private>false</Private>
 		</Reference>
-
 		<Reference Include="Colossal.Core">
 			<Private>false</Private>
 		</Reference>

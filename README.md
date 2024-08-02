@@ -26,6 +26,9 @@ For 229km^2 version(under test):
 
 Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image (PNG or TIFF) are supported.(16384 not work currently) 
 
+Caution ： It's needed to select initial starting tiles before you save map in Editor or it will crash when you loaded a saved map in Editor.
+Currently 4096x4096(more stable) or 8192x8192(test) 16bit grayscale terrain image (PNG or TIFF) are supported.(16384 not work currently) 
+
 ## Compatibility
 The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
 - Modifies:
@@ -35,6 +38,10 @@ The current solution is mainly to replace the burst job system that references m
 	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.(replace)
 
 ## Changelog
+- 1.0.2.3 (57km or 229km with 8k resolution version)
+- 1.0.2.5 
+	- Minor fix.
+
 - 1.0.2.3 (57km or 229km with 8k resolution version)
 	- fix water system rendering bug in 8k heightmap resoluton version.
 	- change the total number of maptiles to 529 (8463 in 229km). (4x size of vanilla each maptile)
@@ -93,4 +100,4 @@ The current solution is mainly to replace the burst job system that references m
 - [Harmony](https://github.com/pardeike/Harmony): A library for patching, replacing and decorating .NET and Mono methods during runtime.
 - [CSLBBS](https://www.cslbbs.net): A chinese Cities: Skylines 2 community.
 - [Discord](https://discord.gg/ABrJqdZJNE): Cities 2 Modding (in testing channel https://discord.com/channels/1169011184557637825/1252265608607961120)
-- Thanks  Rebeccat, HideoKuze2501, Nulos, Jack the Stripper （in no particular order） and other good people who are not mentioned above for the test!
+- Thanks  Rebeccat, HideoKuze2501, Nulos, Jack the Stripper ��in no particular order�� and other good people who are not mentioned above for the test!

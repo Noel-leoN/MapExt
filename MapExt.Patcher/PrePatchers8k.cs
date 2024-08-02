@@ -186,7 +186,7 @@ namespace MapExtPreloader
                         {
                             if (ins.OpCode.Name == "ldc.i4" && (int)ins.Operand == 8191)
                             {
-                                ins.Operand = 16383;
+                                //ins.Operand = 65535;
                             }
                         }
                     }//method SetDefaultHeights;
