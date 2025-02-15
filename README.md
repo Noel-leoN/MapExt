@@ -1,44 +1,42 @@
 # Cities Skylines 2 Map Extended Mod (Beta)
 
 ## Introduction
-
 - 57km^2 Extended Map (16x the size of the vanilla map)
 - 229km^2 Extended Map (256x size)
 
 ## Requirements
-
-- Game version 1.2.0f1.
 - BepInEx 5.4.21
 
 ## Install
-
 - install BepInEx 5.4.21 to you game root, run the game once then exit.
-- download and unzip the Release zip file, then you'll get MapExt.PDX folder(1 file) and MapExt.Patch folder(5 files).
-- copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
+- download and unzip the Release zip file, then you'll get MapExt.PDX folder(1 file) and MapExt.Patch folder(3 files).
 - copy MapExt.Patch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
+- (optional, only required for some simulation fix) copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
 
 ## Usage
-For 57km^2 version(more stable):
+For 57km^2 version(stable):
 - create map in game editor manually or import 57.344km heightmap and 229.376km worldmap. (or any size you want but it scales)
 
 For 229km^2 version(under test):
 - create map in game editor manually or import 229.376km heightmap and 917.504km worldmap(recommand only use heightmap for better performance). (or any size you want but it scales)
 
-Currently 4096x4096(more stable) 16bit grayscale terrain image (PNG or TIFF) are supported.(8192 causes bugy water rendering,16384 totally not work) 
+Currently 4096x4096(stable) 16bit grayscale terrain image (PNG or TIFF) are supported.(8192 causes bugy water rendering,16384 totally not work) 
 
 ## Caution 
 It's recommanded to select initial starting tiles before you save map in Editor or it will crash when you loaded a saved map in Editor.
-(This is a vanilla bug that has been fixed in version 1.1.8f)
+(This is a vanilla bug that may have been fixed since version 1.1.8f)
 
 ## Compatibility
-The current solution is mainly to replace the burst job system that references mapsize, which may not be compatible with other mods.
-- Modifies:
-	- maptile/areatool system.(replace)
-	- .cctor of water/terrain system.(preloader patch)
- 	- some water-related systems.(replace)
-	- some generic subclasses of cellmapsystem ,and most of the systems that reference these subsystems.(replace)
+The mod uses preprocessing to patch static constants , so they don't theoretically cause other mod conflicts.
+(not using PDX mods is deferred loading, so they can't be achieved without compromising compatibility and performance for the time being)
 
 ## Changelog
+- 1.0.5.0
+    - Theoretically its a relatively stable version.
+    - After an in-depth look at the burst compile mechanics of this game, (misled by some claims before), I've found that very little code needs to be patched via MonoCecil. Therefore, it will not affect the gameplay and performance of vanilla game.
+    - Deleted a lot of unnecessary codes
+    - The PDX part of mod is only a fix for a coupling flaw in vanilla where the noise pollution effect amplifies as the mapsize expands. Even if you don't use it, it will not affect gameplay at all, except that citizen happiness will show a high noise warning. Consider using mods like City Control to disable these notice, as happiness is very easy to achieve.
+
 - 1.0.3.0
     - Compatible with 1.2.0f1
 	- Only 4096x4096 / 16bit grayscale PNG or TIFF format of heightmap is supported.
@@ -57,10 +55,8 @@ The current solution is mainly to replace the burst job system that references m
  - Bugs with all vanilla maps, and you have to use a custom 57km*57km(or larger) map.
 
 ## Issues
-- May not be compatible with some mods.
+- May not be compatible with mods that specific to the 14336m mapsize developed, such as Water Feature.Hopefully, the author will change the map size constant to a dynamically fetched variable.
 - Repeatedly replicate the overlayinfomation of the playable area to the scope of the world map, its a vanilla bug, hasn't been fixed yet, so please ignore it for now, or don't use too much zoom out.
-- a few simulation systems may not be working properly,such as water pumping/tempwater powerstation.
-- Water Feature Mod needs to override the "mapextend" constant specified to work properly.
 - If you found issues please report in github, thank you.
 
 ## Disclaimer
