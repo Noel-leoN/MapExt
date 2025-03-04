@@ -9,7 +9,7 @@
 
 ## Install
 - install BepInEx 5.4.21 to you game root, run the game once then exit.
-- download and unzip the Release zip file, then you'll get MapExt.PDX folder(1 file) and MapExt.Patch folder(3 files).
+- download and unzip the Release zip file, then you'll get MapExt.Patch folder(1 file) and MapExt.PDX folder(3 files).
 - copy MapExt.Patch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
 - (optional, only required for some simulation fix) copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
 
@@ -32,8 +32,7 @@ The mod uses preprocessing to patch static constants , so they don't theoretical
 
 ## Changelog
 - 1.0.5.0
-    - Theoretically its a relatively stable version.
-    - After an in-depth look at the burst compile mechanics of this game, (misled by some claims before), I've found that very little code needs to be patched via MonoCecil. Therefore, it will not affect the gameplay and performance of vanilla game.
+    - Theoretically its a relatively stable version.    
     - Deleted a lot of unnecessary codes
     - The PDX part of mod is only a fix for a coupling flaw in vanilla where the noise pollution effect amplifies as the mapsize expands. Even if you don't use it, it will not affect gameplay at all, except that citizen happiness will show a high noise warning. Consider using mods like City Control to disable these notice, as happiness is very easy to achieve.
 
@@ -55,7 +54,7 @@ The mod uses preprocessing to patch static constants , so they don't theoretical
  - Bugs with all vanilla maps, and you have to use a custom 57km*57km(or larger) map.
 
 ## Issues
-- May not be compatible with mods that specific to the 14336m mapsize developed, such as Water Feature.Hopefully, the author will change the map size constant to a dynamically fetched variable.
+- May not be compatible with mods that specific to the 14336m mapsize developed, such as Water Feature. Hopefully the author will change the map size constant to a dynamically fetched variable.
 - Repeatedly replicate the overlayinfomation of the playable area to the scope of the world map, its a vanilla bug, hasn't been fixed yet, so please ignore it for now, or don't use too much zoom out.
 - If you found issues please report in github, thank you.
 
