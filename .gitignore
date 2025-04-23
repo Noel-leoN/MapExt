@@ -360,4 +360,50 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+<<<<<<< HEAD
 FodyWeavers.xsd
+=======
+FodyWeavers.xsd
+/MapExt.PDX/libcs2/Game.dll
+/MapExt.PDX/MapExtDebug.cs
+/MapExt.Patcher/CellMapSystemPatchers - 复制.cs
+/MapExt.Patcher/Plugin.cs
+/MapExt.PDX/Patches/MethodRedir.cs
+/MapExt.PDX/SystemCellSim/GroundPollutionSystem.cs
+/MapExt.PDX/SystemCellSim/GroundWaterSystem.cs
+/MapExt.PDX/SystemCellSim/NaturalResourceSystem.cs
+/MapExt.PDX/SystemCellSim/NoisePollutionSystem.cs
+/MapExt.PDX/SystemCellSim/TrafficAmbienceSystem.cs
+/MapExt.PDX/SystemCellSim/ZoneAmbienceSystem.cs
+/MapExt.PDX/MapExtDebug.cs
+/MapExt.Patcher/CellMapSystemPatchers - 复制.cs
+/MapExt.Patcher/PrePatchers.cs
+/MapExt.Patcher/PrePatchers16k.cs
+/MapExt.Patcher/PrePatchers8k.cs
+/MapExt.PDX/Patches/MethodRedir.cs
+/MapExt.PDX/SystemCellSim/GroundPollutionSystem.cs
+/MapExt.PDX/SystemCellSim/GroundWaterSystem.cs
+/MapExt.PDX/SystemCellSim/NaturalResourceSystem.cs
+/MapExt.PDX/SystemCellSim/NoisePollutionSystem.cs
+/MapExt.PDX/SystemCellSim/TrafficAmbienceSystem.cs
+/MapExt.PDX/SystemCellSim/ZoneAmbienceSystem.cs
+/MapExt.PDX/MapExtDebug.cs
+/MapExt.Patcher/TerrainFinal.cs
+/MapExt.Patcher/TerrainFinal.cs
+/MapExt.PDX/Patches/TerrainSysPatch.cs
+/MapExt.PDX/Patches/MethodRedir.cs
+>>>>>>> 66bb1dbc6c98cf5a9bdc20ccac3e4dae921c1111
+/MapExt.Patcher/MapExtPreloader - 可正常运行备份.cs
+/MapExt.Patcher/MapExtPreloader - 复制.cs
+/MapExt.Patcher/ReplaceBurstJob.cs
+/MapExt.PDX/SystemCellMapClosed/GroundPollutionSystemRe.cs
+/MapExt.PDX/SystemCellMapClosed/GroundWaterSystemRe.cs
+/MapExt.PDX/SystemCellMapClosed/NaturalResourceSystem.cs
+/MapExt.PDX/SystemCellMapClosed/TelecomPreviewSystem.cs
+/MapExt.PDX/SystemCellMapClosed/TrafficAmbienceSystemRe.cs
+/MapExt.PDX/SystemCellMapClosed/ZoneAmbienceSystemRe.cs
+/MapExt.PDX/SystemCellMapRef/NetColorSystem.cs
+/MapExt.PDX/SystemCellMapRef/PowerPlantAISystem.cs
+/MapExt.PDX/SystemCellMapRef/TempRenewableElectricityProductionTooltipSystem.cs
+/MapExt.PDX/SystemCellMapRef/TempWaterPumpingTooltipSystem.cs
+/MapExt.PDX/SystemCellMapRef/WaterPumpingStationAISystem.cs
