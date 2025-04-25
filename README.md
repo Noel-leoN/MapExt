@@ -11,36 +11,36 @@
 - BepInEx 5.4.21
 
 ## Install
-- install BepInEx 5.4.21 to you game root, run the game once then exit.
-- download and unzip the Release zip file, then you'll get MapExt.PDX folder(2 file) and MapExt.Patch folder(1 files).
-- copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
-- copy MapExt.Patch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
-
-
-
-%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods
-
-- 
+- 1. Install BepInEx 5.4.21 x64(https://github.com/BepInEx/BepInEx/releases/tag/v5.4.21) in the game root directory, run the game once then exit.
+Here is the detailed BepInEx installation introduction.(https://docs.bepinex.dev/articles/user_guide/installation/index.html)
+- download and unzip the Release zip file, then get MapExtPDX folder(2 file) and MapExtPatch folder(1 files).
+- copy MapExtPDX folder to game local pdx mod folder. (%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
+- copy MapExtPatch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
+ 
 ## Usage
 For 57km^2 version(more stable):
-- create map in game editor manually to import 57.344km heightmap and 229.376km worldmap. (it's 1:1 scale, or any size you want but it scales)
+- create map in game editor manually to import 57.344km heightmap (229.376km worldmap is optional) . (it's 1:1 scale, or any size you want but it scales)
 
 For 229km^2 version(under test):
-- create map in game editor manually to import 229.376km heightmap and 917.504km worldmap(recommand only use heightmap for better performance). (or any size you want but it scales)
+- create map in game editor manually to import 229.376km heightmap (optional 917.504km worldmap, but not recommand because of performance drop). (or any size you want but it scales)
 
-Currently 4096x4096 16bit grayscale terrain image (PNG or TIFF) are supported.(8192 causes bugy water rendering,16384 totally not work) 
+Supported terrain image format: 4096x4096 16bit grayscale terrain image (PNG or TIFF) .
 
 ## Caution 
-- Bugs with all vanilla maps, and you have to use a custom 57km*57km(or larger) map.
-  Due to the change in terrain height ratio, do not use vanilla game saves to play, otherwise existing buildings will have visual errors.
+- Bugs with all vanilla maps. You have to use a custom map.
+  Due to the change in terrain height ratio, DO NOT use vanilla game saves to play, otherwise existing buildings will have visual errors.
 
-- If you have an earlier version installed, be sure to delete all directories and files, including BepInEx/patcher/MapEx and local PDX mods/MapExt.PDX
+- If you have an earlier version installed, be sure to delete all directories and files, including BepInEx/patcher/MapExt and local PDX mods/MapExt.PDX
 
 ## Code implementation & Compatibility description for modders
-
+- The main patching logic uses BepinEx MonoCecil Preloader to patch static fields (which is very difficult to do with ECS+Harmony and other methods), and then uses Harmony IL replaces and patches the method that calls the BurstJob of the relevant static fields that have been inlined. 
+- Made a Harmony transpiler universal helper tool to great easily replace Burst Jobs and make future maintenance very simple.
+- Theoretically, except for a slight delay in starting to enter the game logo screen, the performance in the game will not be much affected. 
 
 ## Changelog
-
+- v1.2
+  1. more complete simulation system (adding repair vehicle navigation, customizable AreaTool map tiles, etc.) 
+  2. rewritten the patch code significantly,it might boost performance a bit.
   
 ## Notes
 
@@ -49,14 +49,11 @@ Currently 4096x4096 16bit grayscale terrain image (PNG or TIFF) are supported.(8
 - May not be compatible with some special mods.
 - Repeatedly replicate the overlayinfomation of the playable area to the scope of the world map, its a vanilla bug, hasn't been fixed yet, so please ignore it for now, or don't use too much zoom out.
 - a few simulation systems may not be working properly,such as water pumping/tempwater powerstation.
-- Water Feature Mod needs to override the "mapextend" constant specified inside it in order to work properly.
+- Water Feature Mod needs to override the "mapextend" constant specified inside it in order to work properly.(now The latest beta version is working fine. )
 - If you found issues please report in github, thank you.
 
 ## Disclaimer
 - SAVE YOUR GAME before use this mod. Please use at your own risk.
-
-## Build Tips
-- If you want to build your own version, such as modifying larger or smaller mapsize limits, it is recommended that first use the Bepinex dump to get the "prepatched" dll, and then replace the reference in your PDX project.
 
 ## Credits
 - [Captain-Of-Coit](https://github.com/Captain-Of-Coit/cities-skylines-2-mod-template): A Cities: Skylines 2 BepInEx mod template.
