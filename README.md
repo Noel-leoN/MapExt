@@ -11,23 +11,12 @@
 - BepInEx 5.4.21
 
 ## Install
+- install BepInEx 5.4.21 to you game root, run the game once then exit.
+- download and unzip the Release zip file, then you'll get MapExt.PDX folder(2 file) and MapExt.Patch folder(1 files).
+- copy MapExt.PDX folder to game local pdx mod folder. (usually located in: Users\youraccountname\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
+- copy MapExt.Patch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
 
-- 1. Install BepInEx 5.4.21 x64(https://github.com/BepInEx/BepInEx/releases/tag/v5.4.21) in the game root directory, run the game once then exit.
-  Here is the detailed BepInEx installation introduction.(https://docs.bepinex.dev/articles/user_guide/installation/index.html)
-- 2. download and unzip the latest Release zip file(https://github.com/Noel-leoN/MapExt/releases), then get 2 folders: patchers, plugins.
-- 3. copy these 2 folders to yourgameroot/BepInEx (DO NOT change the name of the folders and files)
-- 4. If correct, you'll get a folder structure like this:
-	|- yourgameroot
-	        |--- BepInEx
-					|---plugins
-                    |      |---MapExtPDX
-	                |              |---MapExtPDX_win_x86_64.dll
-	                |              |---MapExtPDX.dll
-	                |---patchers
-	                       |---MapExtPatcher
-	                               |---MapExtPatcher.dll
-     now installation complete.
-- To Uninstall or befor reinstall the mod just delete these 3 files.
+
 
 %USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods
 
@@ -48,15 +37,10 @@ Currently 4096x4096 16bit grayscale terrain image (PNG or TIFF) are supported.(8
 - If you have an earlier version installed, be sure to delete all directories and files, including BepInEx/patcher/MapEx and local PDX mods/MapExt.PDX
 
 ## Code implementation & Compatibility description for modders
-The main patching logic uses MonoCecil to patch static fields (which is very difficult to do with Harmony and other methods), and IL replaces and patches the method that calls the BurstJob of the relevant static fields that have been inlined. 
-Theoretically, except for a slight delay in starting to enter the game logo screen, the performance in the game will not be affected. 
-In terms of compatibility, since it was patched before the PDX mod was loaded, it shouldn't cause crash conflicts.
-The new code mechanism implements the use of the MonoCeCil generic helper, so that the replacement of a BurstJob only requires changing the name list
+
 
 ## Changelog
-- 1.1
-  more complete simulation system (adding repair vehicle navigation, customizable AreaTool map tiles, etc.) 
-  Rewritten the patch code significantly, now you only need to install it in the BepInEx directory, no need to install the PDX local mod part.
+
   
 ## Notes
 
