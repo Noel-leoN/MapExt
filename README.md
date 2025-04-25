@@ -41,9 +41,10 @@ Supported terrain image format: 4096x4096 16bit grayscale terrain image (PNG or 
 - v1.2
   1. more complete simulation system (adding repair vehicle navigation, customizable AreaTool map tiles, etc.) 
   2. rewritten the patch code significantly,it might boost performance a bit.
+  If you encounter any problems, you can roll back to version 1.0.5.6
   
 ## Notes
-
+ººÓïËµÃ÷
 
 ## Issues
 - May not be compatible with some special mods.
