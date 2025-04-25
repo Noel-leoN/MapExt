@@ -46,6 +46,7 @@ namespace MapExtPDX
                         num += m_HouseholdCitizens[renter].Length;
                     }
                 }
+                //int2 cell = CellMapSystem<PopulationCell>.GetCell(m_Transforms[entity].m_Position, CellMapSystem<PopulationCell>.kMapSize, PopulationToGridSystem.kTextureSize);
                 int2 cell = CellMapSystem<PopulationCell>.GetCell(m_Transforms[entity].m_Position, CellMapSystem<PopulationCell>.kMapSize, PopulationToGridSystem.kTextureSize);
                 if (cell.x >= 0 && cell.y >= 0 && cell.x < PopulationToGridSystem.kTextureSize && cell.y < PopulationToGridSystem.kTextureSize)
                 {

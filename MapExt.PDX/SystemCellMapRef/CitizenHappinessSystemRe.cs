@@ -7,13 +7,11 @@ using Game.Common;
 using Game.Economy;
 using Game.Prefabs;
 using Game.Simulation;
-using Game.Triggers;
 using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using static Game.Simulation.CitizenHappinessSystem;
@@ -49,14 +47,7 @@ using static Game.Simulation.CitizenHappinessSystem;
 			Count = 25
 		}
 
-		private struct FactorItem
-		{
-			public HappinessFactor m_Factor;
-
-			public int4 m_Value;
-
-			public uint m_UpdateFrame;
-		}
+		
 */
 
 namespace MapExtPDX
@@ -217,6 +208,15 @@ namespace MapExtPDX
         public uint m_SimulationFrame;
 
         public NativeQueue<StatisticsEvent>.ParallelWriter m_StatisticsEventQueue;
+
+        public struct FactorItem
+        {
+            public HappinessFactor m_Factor;
+
+            public int4 m_Value;
+
+            public uint m_UpdateFrame;
+        }
 
         private void AddData(float value)
         {

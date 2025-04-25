@@ -12,38 +12,6 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using static Game.Simulation.LandValueSystem;
 
-/*
-		private struct NetIterator : INativeQuadTreeIterator<Entity, QuadTreeBoundsXZ>, IUnsafeQuadTreeIterator<Entity, QuadTreeBoundsXZ>
-		{
-			public int m_TotalCount;
-
-			public float m_TotalLandValueBonus;
-
-			public Bounds3 m_Bounds;
-
-			public ComponentLookup<LandValue> m_LandValueData;
-
-			public ComponentLookup<EdgeGeometry> m_EdgeGeometryData;
-
-			public bool Intersect(QuadTreeBoundsXZ bounds)
-			{
-				return MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds);
-			}
-
-			public void Iterate(QuadTreeBoundsXZ bounds, Entity entity)
-			{
-				if (MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds) && this.m_LandValueData.HasComponent(entity) && this.m_EdgeGeometryData.HasComponent(entity))
-				{
-					LandValue landValue = this.m_LandValueData[entity];
-					if (landValue.m_LandValue > 0f)
-					{
-						this.m_TotalLandValueBonus += landValue.m_LandValue;
-						this.m_TotalCount++;
-					}
-				}
-			}
-		}
-*/
 
 namespace MapExtPDX
 {
@@ -137,6 +105,38 @@ namespace MapExtPDX
             }
             m_LandValueMap[index] = value;
         }
+        private struct NetIterator : INativeQuadTreeIterator<Entity, QuadTreeBoundsXZ>, IUnsafeQuadTreeIterator<Entity, QuadTreeBoundsXZ>
+        {
+            public int m_TotalCount;
+
+            public float m_TotalLandValueBonus;
+
+            public Bounds3 m_Bounds;
+
+            public ComponentLookup<LandValue> m_LandValueData;
+
+            public ComponentLookup<EdgeGeometry> m_EdgeGeometryData;
+
+            public bool Intersect(QuadTreeBoundsXZ bounds)
+            {
+                return MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds);
+            }
+
+            public void Iterate(QuadTreeBoundsXZ bounds, Entity entity)
+            {
+                if (MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds) && this.m_LandValueData.HasComponent(entity) && this.m_EdgeGeometryData.HasComponent(entity))
+                {
+                    LandValue landValue = this.m_LandValueData[entity];
+                    if (landValue.m_LandValue > 0f)
+                    {
+                        this.m_TotalLandValueBonus += landValue.m_LandValue;
+                        this.m_TotalCount++;
+                    }
+                }
+            }
+        }
+
+
     }
 
 }

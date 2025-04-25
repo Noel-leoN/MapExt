@@ -29,6 +29,9 @@
      now installation complete.
 - To Uninstall or befor reinstall the mod just delete these 3 files.
 
+%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods
+
+- 
 ## Usage
 For 57km^2 version(more stable):
 - create map in game editor manually to import 57.344km heightmap and 229.376km worldmap. (it's 1:1 scale, or any size you want but it scales)

@@ -25,6 +25,9 @@ namespace MapExtPDX
             short num9 = (short)((num > 0 && num2 < NoisePollutionSystem.kTextureSize - 1) ? this.m_PollutionMap[index - 1 + NoisePollutionSystem.kTextureSize].m_PollutionTemp : 0);
             short num10 = (short)((num < NoisePollutionSystem.kTextureSize - 1 && num2 < NoisePollutionSystem.kTextureSize - 1) ? this.m_PollutionMap[index + 1 + NoisePollutionSystem.kTextureSize].m_PollutionTemp : 0);
             value.m_Pollution = (short)(value.m_PollutionTemp / 4 + (num3 + num4 + num5 + num6) / 8 + (num7 + num8 + num9 + num10) / 16);
+            /// 原版计算过大，改为1/4较正常
+            value.m_Pollution /= 4;
+            ///
             this.m_PollutionMap[index] = value;
         }
     }

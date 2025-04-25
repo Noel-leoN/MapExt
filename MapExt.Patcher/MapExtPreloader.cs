@@ -3,12 +3,11 @@
 // See LICENSE in the project root for full license information.
 
 using System; // 使用BepInEx自带日志
-using System.IO;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.IO;
 using System.Linq; // 用于LINQ查询，例如在OtherPatching中使用
+using System.Runtime.CompilerServices;
 using BepInEx.Logging;
-using BepInEx;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -33,10 +32,10 @@ public static class PreloaderPatcher
     // 超过229376误差过大暂不推荐
     // kMapSize = m_TexSize * kCellSize; m_TexSize默认2048，暂时应保持不变；
 
-    private const float TERRAIN_NEW_SIZE = CELL_FACTOR * 14336f; 
+    private const float TERRAIN_NEW_SIZE = CELL_FACTOR * 14336f;
     // TerrainSystem.kDefaultMapSize
 
-    private const int CELL_NEW_SIZE = CELL_FACTOR * 14336; 
+    private const int CELL_NEW_SIZE = CELL_FACTOR * 14336;
     // CellMapSystem<T>.kMapSize; WaterSystem.kMapSize
 
     /// <summary>
@@ -58,8 +57,8 @@ public static class PreloaderPatcher
             // "Game.Areas.MapTileSystem",
             // "Game.Tools.AreaToolSystem", // 仅用作DevUI/Simulation/AreaTool/MapTile工具
             /// WaterSystem相关
-            "Game.Simulation.WaterSystem", // 集中处理
-            "Game.Simulation.SurfaceDataReader", // 集中处理
+            // "Game.Simulation.WaterSystem", // 集中处理
+            // "Game.Simulation.SurfaceDataReader", // 集中处理
             // "Game.Simulation.FloodCheckSystem",
             // "Game.Simulation.WaterDangerSystem",
             // "Game.Audio.WeatherAudioSystem",
@@ -113,8 +112,10 @@ public static class PreloaderPatcher
                     Logger.LogInfo($"公开化类型工具: {type.FullName}");
                 }
 
+                /// 弃用
                 // 修补成员（包括嵌套类型、方法、字段、属性）
-                MakeMembersPublic(type);
+                //
+                // MakeMembersPublic(type);
 
                 // 添加到patchedTypes列表
                 patchedTypes.Add(type.FullName);
@@ -143,6 +144,7 @@ public static class PreloaderPatcher
         // CellMap系统 kMapSize
         CellMapSystemPatch(assembly);
 
+        /*  暂时取消BepInEx调用BurstJob方式
         /// Part 5
         // CellMap Burst Job 自动替换工具
         // 遍历所有定义的补丁目标
@@ -161,6 +163,7 @@ public static class PreloaderPatcher
                 Logger.LogDebug($"BurstJobReplacer未找到指定程序集方法 '{target.TargetTypeName}.{target.TargetMethodName}' '{assembly.Name.Name}'");
             }
         }
+        */
     }
 
     // 方法：修补指定类型的所有非public成员，跳过.ctor和.cctor
@@ -228,7 +231,7 @@ public static class PreloaderPatcher
         {
             /// 处理字段；TerrainSystem.kDefaultMapSize；不一定很必要，双保险以防内联；
             FieldDefinition kMapSizeField = terrainSystem.Fields.First(f => f.Name == "kDefaultMapSize");
-            // 移除readonly修饰符(暂未赋值，int2)
+            // 移除readonly修饰符(暂未赋值，int2) ； 未被BurstJob使用，可以移除；
             kMapSizeField.Attributes &= ~FieldAttributes.InitOnly;
             Logger.LogInfo($"地形系统修补字段{kMapSizeField}...");
 
@@ -352,15 +355,15 @@ public static class PreloaderPatcher
             /// 处理字段；不一定很必要，双保险以防内联；
             // WaterSystem.kMapSize字段修改；
             FieldDefinition kMapSizeField = waterSystem.Fields.First(f => f.Name == "kMapSize");
-            // 移除readonly修饰符并赋值
-            kMapSizeField.Attributes &= ~FieldAttributes.InitOnly;
+            // 移除readonly修饰符并赋值;取消，否则Burst编译不过
+            // kMapSizeField.Attributes &= ~FieldAttributes.InitOnly;
             kMapSizeField.InitialValue = BitConverter.GetBytes(CELL_NEW_SIZE);
             Logger.LogInfo($"正在修补字段WaterSystem.kMapSize为 ...{kMapSizeField.Constant}");
 
             // WaterSystem.kCellSize字段修改；
             FieldDefinition kCellSizeField = waterSystem.Fields.First(f => f.Name == "kCellSize");
-            // 移除readonly修饰符 
-            kCellSizeField.Attributes &= ~FieldAttributes.InitOnly;
+            // 移除readonly修饰符；取消，否则Burst编译不过
+            // kCellSizeField.Attributes &= ~FieldAttributes.InitOnly;
             kCellSizeField.InitialValue = BitConverter.GetBytes(7f * CELL_FACTOR);
             Logger.LogInfo($"水系统正在修补字段WaterSystem.kCellSize为 ...{kCellSizeField.Constant}");
 
@@ -403,17 +406,19 @@ public static class PreloaderPatcher
 
     private static void CellMapSystemPatch(AssemblyDefinition assembly)
     {
-        // const string TARGET_FIELD_NAME = "kMapSize";
+        const string TARGET_FIELD_NAME = "kMapSize";
 
-        // 获取WaterSystem Type
+        // 获取CellMapSystem<T> generic type definition
         var baseType = assembly.MainModule.GetType("Game.Simulation.CellMapSystem`1");
+        Logger.LogInfo($"成功获取泛型基类 {baseType}...");
 
-        // 日志输出其他修补逻辑开始
-        Logger.LogInfo($"CellMap系统获取到泛型基类{baseType.Name}...");
-
-        if (baseType != null)
+        if (baseType == null)
         {
-            // 查找泛型基类静态构造函数；若版本更新后不存在则必须修补所有调用方法ldsfld；
+            // 日志输出其他修补逻辑开始
+            Logger.LogError($"警告！CellMap系统未能获取到泛型基类{baseType.Name}...");
+            return;
+        }
+            // 查找泛型基类静态构造函数；
             MethodDefinition cctor = baseType.Methods.FirstOrDefault(m => m.IsConstructor && m.IsStatic);
             if (cctor == null || !cctor.HasBody)
             {
@@ -422,153 +427,65 @@ public static class PreloaderPatcher
             }
             Logger.LogInfo($"CellMap系统 {baseType}已找到静态构造函数，正在处理IL...");
 
-            /*
-            // Get the ILProcessor for the static constructor
-            ILProcessor ilProcessor = cctor.Body.GetILProcessor();
-            List<Instruction> instructions = cctor.Body.Instructions.ToList(); // Work with a copy or list
-            bool patched = false;
+        // Get the ILProcessor for the static constructor
+        ILProcessor ilProcessor = cctor.Body.GetILProcessor();
+        List<Instruction> instructions = cctor.Body.Instructions.ToList(); // Work with a copy or list
+        bool patched = false;
 
-            // Iterate through instructions to find where kMapSize is assigned
-            for (int i = 0; i < instructions.Count; i++)
+        // Iterate through instructions to find where kMapSize is assigned
+        for (int i = 0; i < instructions.Count; i++)
+        {
+            Instruction instruction = instructions[i];
+
+            // Look for storing the value into our static field (stsfld)
+            if (instruction.OpCode == OpCodes.Stsfld &&
+                instruction.Operand is FieldReference fieldRef &&
+                fieldRef.Name == TARGET_FIELD_NAME &&
+                fieldRef.DeclaringType.GetElementType().FullName == baseType.FullName) // Compare full names of the type definitions
             {
-                Instruction instruction = instructions[i];
+                Logger.LogInfo($"Found 'stsfld {TARGET_FIELD_NAME}' at index {i}.");
 
-                // Look for storing the value into our static field (stsfld)
-                if (instruction.OpCode == OpCodes.Stsfld &&
-                    instruction.Operand is FieldReference fieldRef &&
-                    fieldRef.Name == TARGET_FIELD_NAME &&
-                    fieldRef.DeclaringType.GetElementType().FullName == baseType.FullName) // Compare full names of the type definitions
+                // Now, look *backwards* from this instruction to find where
+                // the *original* value (e.g., 14336) was loaded onto the stack.
+                // This is typically an ldc.i4 instruction immediately before the stsfld.
+                if (i > 0)
                 {
-                    Logger.LogInfo($"Found 'stsfld {TARGET_FIELD_NAME}' at index {i}.");
+                    Instruction previousInstruction = instructions[i - 1];
 
-                    // Now, look *backwards* from this instruction to find where
-                    // the *original* value (e.g., 14336) was loaded onto the stack.
-                    // This is typically an ldc.i4 instruction immediately before the stsfld.
-                    if (i > 0)
+                    // Check if the previous instruction loaded an integer constant
+                    if (previousInstruction.OpCode == OpCodes.Ldc_I4)
                     {
-                        Instruction previousInstruction = instructions[i - 1];
+                        // Found the likely original value load!
+                        int originalValue = (int)previousInstruction.Operand;
+                        Logger.LogInfo($"  Previous instruction is 'ldc.i4 {originalValue}'. Replacing it.");
 
-                        // Check if the previous instruction loaded an integer constant
-                        if (previousInstruction.OpCode == OpCodes.Ldc_I4)
-                        {
-                            // Found the likely original value load!
-                            int originalValue = (int)previousInstruction.Operand;
-                            Logger.LogInfo($"  Previous instruction is 'ldc.i4 {originalValue}'. Replacing it.");
+                        // Create the new instruction to load the new value
+                        Instruction newLoadInstruction = ilProcessor.Create(OpCodes.Ldc_I4, CELL_NEW_SIZE);
 
-                            // Create the new instruction to load the new value
-                            Instruction newLoadInstruction = ilProcessor.Create(OpCodes.Ldc_I4, CELL_NEW_SIZE);
+                        // Replace the old load instruction with the new one
+                        ilProcessor.Replace(previousInstruction, newLoadInstruction);
 
-                            // Replace the old load instruction with the new one
-                            ilProcessor.Replace(previousInstruction, newLoadInstruction);
-
-                            // We have successfully patched the initialization value.
-                            patched = true;
-                            Logger.LogInfo($"  Successfully replaced load instruction. New value {CELL_NEW_SIZE} will be stored.");
-                            break; // Assume only one initialization in .cctor
-                        }
-                        else
-                        {
-                            Logger.LogWarning($"  Instruction before 'stsfld {TARGET_FIELD_NAME}' was not the expected 'ldc.i4'. IL Structure might be different. Cannot patch value reliably. Instruction was: {previousInstruction}");
-                        }
+                        // We have successfully patched the initialization value.
+                        patched = true;
+                        Logger.LogInfo($"  Successfully replaced load instruction. New value {CELL_NEW_SIZE} will be stored.");
+                        break; // Assume only one initialization in .cctor
                     }
                     else
                     {
-                        Logger.LogWarning($"  'stsfld {TARGET_FIELD_NAME}' was the first instruction? Unexpected IL structure.");
+                        Logger.LogWarning($"  Instruction before 'stsfld {TARGET_FIELD_NAME}' was not the expected 'ldc.i4'. IL Structure might be different. Cannot patch value reliably. Instruction was: {previousInstruction}");
                     }
-                    // If patching failed, break to avoid potential errors if structure is unexpected
-                    if (!patched) break;
                 }
-            } // End for loop
-
-            if (!patched)
-            {
-                Logger.LogWarning($"xiubu'{TARGET_FIELD_NAME}' in the .cctor of '{baseType}'.");
-            }
-            else
-            {
-                Logger.LogInfo($"Successfully patched {baseType} .cctor.");
-                // MonoMod loader might automatically handle recalculating offsets/maxstack,
-                // but sometimes manual calls are needed if doing complex IL manipulation.
-                // For simple replacement, it's often automatic.
-            }
-            */
-
-            /// 双保险处理基类及所有封闭类型
-            /// 
-            ProcessType(baseType);
-            Logger.LogInfo($"CellMap系统基类处理完成！ {baseType.FullName} ");
-
-            foreach (var type in assembly.MainModule.Types
-                .Where(t => IsClosedSubtype(t, baseType)))
-            {
-                ProcessType(type);
-                Logger.LogInfo($"CellMap系统处理封闭类型完成！ {type.FullName} ");
-            }
-
-            static bool IsClosedSubtype(TypeDefinition type, TypeDefinition baseType)
-            {
-                var current = type;
-                while (current != null)
+                else
                 {
-                    if (current.BaseType?.Resolve() == baseType && !current.HasGenericParameters)
-                        return true;
-                    current = current.BaseType?.Resolve();
+                    Logger.LogWarning($"  'stsfld {TARGET_FIELD_NAME}' was the first instruction? Unexpected IL structure.");
                 }
-                return false;
+                // If patching failed, break to avoid potential errors if structure is unexpected
+                if (!patched) break;
             }
-
-            static void ProcessType(TypeDefinition type)
-            {
-                Logger.LogInfo($"CellMap系统正在处理类型 {type.FullName} ");
-
-                foreach (var field in type.Fields.Where(f =>
-                    f.Name == "kMapSize" &&
-                    f.IsStatic &&
-                    f.IsInitOnly))
-                {
-                    // 修改字段默认值
-                    // 移除initonly限制（重要！）
-                    field.IsInitOnly = false;
-                    field.Constant = CELL_NEW_SIZE;
-                    Logger.LogInfo($"CellMap系统处理封闭类型 {type.FullName} 字段 {field.Name} 变更为 {field.Constant} ");
-
-                    // 确保存在静态构造函数 
-                    var cctor = type.Methods.FirstOrDefault(m => m.Name == ".cctor");
-                    if (cctor == null)
-                    {
-                        Logger.LogInfo($"CellMap系统未找到静态构造函数 {type.FullName} ,创建新的.cctor ");
-                        cctor = new MethodDefinition(
-                            ".cctor",
-                            MethodAttributes.Static | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName,
-                            type.Module.TypeSystem.Void);
-                        type.Methods.Add(cctor);
-                        cctor.Body = new MethodBody(cctor);
-                        cctor.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
-                    }
-
-                    // 修改/添加赋值指令 
-                    var processor = cctor.Body.GetILProcessor();
-                    var targetInstruction = cctor.Body.Instructions
-                        .FirstOrDefault(i => i.OpCode == OpCodes.Ldc_I4 && (int)i.Operand == 14336);
-
-                    if (targetInstruction != null)
-                    {
-                        targetInstruction.Operand = CELL_NEW_SIZE;
-                        Logger.LogInfo($"IL指令修改: {targetInstruction.OpCode}  => {targetInstruction.Operand}");
-                    }
-                    else // 无原始赋值则插入新指令 
-                    {
-                        var returnInstruction = cctor.Body.Instructions.Last();
-                        processor.InsertBefore(returnInstruction, Instruction.Create(OpCodes.Ldc_I4, CELL_NEW_SIZE));
-                        processor.InsertBefore(returnInstruction, Instruction.Create(OpCodes.Stsfld, field));
-                    }
-                    Logger.LogInfo($"CellMap系统处理封闭类型 {type.FullName} 字段 {field.Name} 变更为 {field.Constant} ");
-                }
-            }
+        } // End for loop
 
 
-
-            ModuleDefinition module = assembly.MainModule;
+        ModuleDefinition module = assembly.MainModule;
             //防御性防止内联；
             CustomAttribute nonVerAttr = new(
                module.ImportReference(
@@ -578,7 +495,7 @@ public static class PreloaderPatcher
                 module.ImportReference(typeof(MethodImplOptions)),
                 (int)(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)));
             baseType.CustomAttributes.Add(nonVerAttr);
-        }
+        
 
         // Fallback/Alternative: Method to patch all ldsfld usages (more complex)
         // public static void PatchAllUsages(AssemblyDefinition assembly) { ... }
@@ -586,7 +503,7 @@ public static class PreloaderPatcher
 
     }// CellMapSystem
 
-
+    /// 暂时弃用
     ///
     /// Burst Job Replacer
     /// 
@@ -752,8 +669,23 @@ public static class PreloaderPatcher
     private static string FindCustomJobDllPath(string replacementAssemblyName)
     {
         // Example: Assume it's in a subfolder named 'YourMod' within the BepInEx plugins directory
-        string pluginsPath = Paths.PluginPath; // BepInEx provided path
-        string expectedPath = Path.Combine(pluginsPath, "MapExtPDX", $"{replacementAssemblyName}.dll"); // Use parameter
+        // string targetdllPath = Paths.PluginPath; // BepInEx provided path
+
+        // 获取%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods
+        string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        // 拼接完整路径
+        string targetdllPath = Path.Combine(userProfile, "AppData", "LocalLow", "Colossal Order", "Cities Skylines II", "Mods");
+
+        if (Directory.Exists(targetdllPath))
+        {
+            Logger.LogInfo($"已找到用户目录: {targetdllPath}");
+        }
+        else
+        {
+            Logger.LogWarning($"路径不存在：{targetdllPath}");
+        }
+
+        string expectedPath = Path.Combine(targetdllPath, "MapExtPDX", $"{replacementAssemblyName}.dll"); // Use parameter
         if (File.Exists(expectedPath))
         {
             return expectedPath;
@@ -844,6 +776,7 @@ public static class PreloaderPatcher
 
     // --- 1. 定义所有需要应用的补丁目标 ---
     // 这个列表在这里初始化，包含了所有你想要修改的地方。
+
     private static readonly List<JobPatchTarget> PatchTargets = new()
     {
         new JobPatchTarget(
@@ -899,7 +832,7 @@ public static class PreloaderPatcher
         new JobPatchTarget(
                 targetType: "Game.Tools.TelecomPreviewSystem",
                 targetMethod: "OnUpdate",
-                originalJob: "Game.Tools.TelecomCoverageSystem/TelecomCoverageJob", // 嵌套类型用 /
+                originalJob: "Game.Simulation.TelecomCoverageSystem/TelecomCoverageJob", // 嵌套类型用 /
                 replacementAsm: "MapExtPDX", // 替换 Job 所在的程序集名
                 replacementJob: "MapExtPDX.TelecomCoverageJob" // 替换 Job 的完整类型名
             ),
@@ -1065,4 +998,77 @@ public static class PreloaderPatcher
             //     replacementJob: "YourMod.CustomJobs.MyRenderingJob"
             // )
         };
+
+
+
+
+    /*
+    private static void ExecutableAsset(AssemblyDefinition assembly)
+    {
+        // 注意：命名空间和类型名称需要精确匹配游戏代码
+        var executableAssetType = assembly.MainModule.GetType("Colossal.IO.AssetDatabase.ExecutableAsset"); // <<--- 修改为 ExecutableAsset 的实际命名空间和类名
+        if (executableAssetType == null)
+        {
+            Logger.LogError("ExecutableAsset type not found!");
+            return;
+        }
+
+        // --- 定位 GetModAssets 方法 ---
+        // 需要找到带有 Type 参数的那个静态方法
+        var getModAssetsMethod = executableAssetType.Methods.FirstOrDefault(m =>
+            m.Name == "GetModAssets" &&
+            m.IsStatic &&
+            m.Parameters.Count == 1 &&
+            m.Parameters[0].ParameterType.FullName == "System.Type"); // 确保参数类型匹配
+
+        if (getModAssetsMethod == null)
+        {
+            Logger.LogError("ExecutableAsset.GetModAssets(Type) method not found!");
+            return;
+        }
+
+        Logger.LogInfo("Found GetModAssets method. Proceeding with patching...");
+
+        // --- 导入辅助方法的引用 ---
+        // Get the MethodInfo for the helper method first using reflection
+        var helperMethodInfo = typeof(Preloader).GetMethod(nameof(ScanPluginsAndAddAssets),
+                                                           System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        if (helperMethodInfo == null)
+        {
+            Logger.LogError("Helper method ScanPluginsAndAddAssets not found via reflection!");
+            return;
+        }
+        // Then import it into the target module
+        var helperMethodRef = assembly.MainModule.ImportReference(helperMethodInfo);
+
+
+        // --- IL 操作 ---
+        var ilProcessor = getModAssetsMethod.Body.GetProcessor();
+        var instructions = getModAssetsMethod.Body.Instructions;
+
+        // 找到所有的 return 指令
+        var returnInstructions = instructions.Where(inst => inst.OpCode == OpCodes.Ret).ToList();
+        if (!returnInstructions.Any())
+        {
+            Logger.LogError("No return instructions found in GetModAssets!");
+            return;
+        }
+
+
+        foreach (var retInstruction in returnInstructions)
+        {
+            // 在 return 指令之前插入对辅助方法的调用
+            // 假设此时栈顶是 ExecutableAsset[]
+            ilProcessor.InsertBefore(retInstruction, Instruction.Create(OpCodes.Call, helperMethodRef));
+            // 辅助方法的返回值 (新的 ExecutableAsset[]) 会留在栈顶，然后被 ret 返回
+            Logger.LogInfo($"Patched before instruction: {retInstruction}");
+        }
+
+        Logger.LogInfo("Successfully patched GetModAssets method.");
+    }
+
+    
+*/
+
+
 }

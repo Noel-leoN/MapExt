@@ -9,17 +9,9 @@ using Unity.Burst.Intrinsics;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using static Game.Simulation.SpawnableAmbienceSystem;
 
 /*
-		private struct GroupAmbienceEffect
-		{
-			public GroupAmbienceType m_Type;
-
-			public float m_Amount;
-
-			public int m_CellIndex;
-		}
+		
 */
 
 /*
@@ -120,6 +112,15 @@ namespace MapExtPDX
         void IJobChunk.Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
         {
             this.Execute(in chunk, unfilteredChunkIndex, useEnabledMask, in chunkEnabledMask);
+        }
+
+        public struct GroupAmbienceEffect
+        {
+            public GroupAmbienceType m_Type;
+
+            public float m_Amount;
+
+            public int m_CellIndex;
         }
     }
 

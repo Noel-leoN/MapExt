@@ -18,21 +18,6 @@ using static Game.Simulation.TelecomCoverageSystem;
 /// TelecomCoverageJob被TelecomCoverageSystem/TelecomPreviewSystem两个系统调用
 /// </summary>
 /// 
-/*
-		private struct CellDensityData
-		{
-			public ushort m_Density;
-		}
-
-		private struct CellFacilityData
-		{
-			public float m_SignalStrength;
-
-			public float m_AccumulatedSignalStrength;
-
-			public float m_NetworkCapacity;
-		}
-		*/
 
 namespace MapExtPDX
 {
@@ -140,6 +125,20 @@ namespace MapExtPDX
             facilityData.Dispose();
             obstructSlopes.Dispose();
             signalStrengths.Dispose();
+        }
+
+        private struct CellDensityData
+        {
+            public ushort m_Density;
+        }
+
+        private struct CellFacilityData
+        {
+            public float m_SignalStrength;
+
+            public float m_AccumulatedSignalStrength;
+
+            public float m_NetworkCapacity;
         }
 
         private void CalculateTelecomCoverage(NativeArray<CellFacilityData> facilityData)

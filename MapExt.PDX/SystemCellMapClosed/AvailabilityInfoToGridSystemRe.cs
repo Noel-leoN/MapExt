@@ -44,77 +44,78 @@ namespace MapExtPDX
             value.m_AvailabilityInfo = math.select(iterator.m_Result.m_AvailabilityInfo / iterator.m_TotalWeight.m_AvailabilityInfo, 0f, iterator.m_TotalWeight.m_AvailabilityInfo == 0f);
             this.m_AvailabilityInfoMap[index] = value;
         }
+        private struct NetIterator : INativeQuadTreeIterator<Entity, QuadTreeBoundsXZ>, IUnsafeQuadTreeIterator<Entity, QuadTreeBoundsXZ>
+        {
+            public AvailabilityInfoCell m_TotalWeight;
+
+            public AvailabilityInfoCell m_Result;
+
+            public float m_CellSize;
+
+            public Bounds3 m_Bounds;
+
+            public BufferLookup<ResourceAvailability> m_Availabilities;
+
+            public ComponentLookup<EdgeGeometry> m_EdgeGeometryData;
+
+            public bool Intersect(QuadTreeBoundsXZ bounds)
+            {
+                return MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds);
+            }
+
+            private void AddData(float2 attractiveness2, float2 uneducated2, float2 educated2, float2 services2, float2 workplaces2, float2 t, float3 curvePos, float weight)
+            {
+                float num = math.lerp(attractiveness2.x, attractiveness2.y, t.y);
+                float num2 = 0.5f * math.lerp(uneducated2.x + educated2.x, uneducated2.y + educated2.y, t.y);
+                float num3 = math.lerp(services2.x, services2.y, t.y);
+                float num4 = math.lerp(workplaces2.x, workplaces2.y, t.y);
+                this.m_Result.AddAttractiveness(weight * num);
+                this.m_TotalWeight.AddAttractiveness(weight);
+                this.m_Result.AddConsumers(weight * num2);
+                this.m_TotalWeight.AddConsumers(weight);
+                this.m_Result.AddServices(weight * num3);
+                this.m_TotalWeight.AddServices(weight);
+                this.m_Result.AddWorkplaces(weight * num4);
+                this.m_TotalWeight.AddWorkplaces(weight);
+            }
+
+            public void Iterate(QuadTreeBoundsXZ bounds, Entity entity)
+            {
+                if (MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds) && this.m_Availabilities.HasBuffer(entity) && this.m_EdgeGeometryData.HasComponent(entity))
+                {
+                    DynamicBuffer<ResourceAvailability> dynamicBuffer = this.m_Availabilities[entity];
+                    float2 availability = dynamicBuffer[18].m_Availability;
+                    float2 availability2 = dynamicBuffer[2].m_Availability;
+                    float2 availability3 = dynamicBuffer[3].m_Availability;
+                    float2 availability4 = dynamicBuffer[1].m_Availability;
+                    float2 availability5 = dynamicBuffer[0].m_Availability;
+                    EdgeGeometry edgeGeometry = this.m_EdgeGeometryData[entity];
+                    int num = (int)math.ceil(edgeGeometry.m_Start.middleLength * 0.05f);
+                    int num2 = (int)math.ceil(edgeGeometry.m_End.middleLength * 0.05f);
+                    float3 @float = 0.5f * (this.m_Bounds.min + this.m_Bounds.max);
+                    for (int i = 1; i <= num; i++)
+                    {
+                        float2 t = i / new float2(num, num + num2);
+                        float3 curvePos = math.lerp(MathUtils.Position(edgeGeometry.m_Start.m_Left, t.x), MathUtils.Position(edgeGeometry.m_Start.m_Right, t.x), 0.5f);
+                        float weight = math.max(0f, 1f - math.distance(@float.xz, curvePos.xz) / (1.5f * this.m_CellSize));
+                        this.AddData(availability, availability2, availability3, availability4, availability5, t, curvePos, weight);
+                    }
+                    for (int j = 1; j <= num2; j++)
+                    {
+                        float2 t2 = new float2(j, num + j) / new float2(num2, num + num2);
+                        float3 curvePos2 = math.lerp(MathUtils.Position(edgeGeometry.m_End.m_Left, t2.x), MathUtils.Position(edgeGeometry.m_End.m_Right, t2.x), 0.5f);
+                        float weight2 = math.max(0f, 1f - math.distance(@float.xz, curvePos2.xz) / (1.5f * this.m_CellSize));
+                        this.AddData(availability, availability2, availability3, availability4, availability5, t2, curvePos2, weight2);
+                    }
+                }
+            }
+        }
     }
 
 }
 
 /*
-private struct NetIterator : INativeQuadTreeIterator<Entity, QuadTreeBoundsXZ>, IUnsafeQuadTreeIterator<Entity, QuadTreeBoundsXZ>
-{
-    public AvailabilityInfoCell m_TotalWeight;
 
-    public AvailabilityInfoCell m_Result;
-
-    public float m_CellSize;
-
-    public Bounds3 m_Bounds;
-
-    public BufferLookup<ResourceAvailability> m_Availabilities;
-
-    public ComponentLookup<EdgeGeometry> m_EdgeGeometryData;
-
-    public bool Intersect(QuadTreeBoundsXZ bounds)
-    {
-        return MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds);
-    }
-
-    private void AddData(float2 attractiveness2, float2 uneducated2, float2 educated2, float2 services2, float2 workplaces2, float2 t, float3 curvePos, float weight)
-    {
-        float num = math.lerp(attractiveness2.x, attractiveness2.y, t.y);
-        float num2 = 0.5f * math.lerp(uneducated2.x + educated2.x, uneducated2.y + educated2.y, t.y);
-        float num3 = math.lerp(services2.x, services2.y, t.y);
-        float num4 = math.lerp(workplaces2.x, workplaces2.y, t.y);
-        this.m_Result.AddAttractiveness(weight * num);
-        this.m_TotalWeight.AddAttractiveness(weight);
-        this.m_Result.AddConsumers(weight * num2);
-        this.m_TotalWeight.AddConsumers(weight);
-        this.m_Result.AddServices(weight * num3);
-        this.m_TotalWeight.AddServices(weight);
-        this.m_Result.AddWorkplaces(weight * num4);
-        this.m_TotalWeight.AddWorkplaces(weight);
-    }
-
-    public void Iterate(QuadTreeBoundsXZ bounds, Entity entity)
-    {
-        if (MathUtils.Intersect(bounds.m_Bounds, this.m_Bounds) && this.m_Availabilities.HasBuffer(entity) && this.m_EdgeGeometryData.HasComponent(entity))
-        {
-            DynamicBuffer<ResourceAvailability> dynamicBuffer = this.m_Availabilities[entity];
-            float2 availability = dynamicBuffer[18].m_Availability;
-            float2 availability2 = dynamicBuffer[2].m_Availability;
-            float2 availability3 = dynamicBuffer[3].m_Availability;
-            float2 availability4 = dynamicBuffer[1].m_Availability;
-            float2 availability5 = dynamicBuffer[0].m_Availability;
-            EdgeGeometry edgeGeometry = this.m_EdgeGeometryData[entity];
-            int num = (int)math.ceil(edgeGeometry.m_Start.middleLength * 0.05f);
-            int num2 = (int)math.ceil(edgeGeometry.m_End.middleLength * 0.05f);
-            float3 @float = 0.5f * (this.m_Bounds.min + this.m_Bounds.max);
-            for (int i = 1; i <= num; i++)
-            {
-                float2 t = i / new float2(num, num + num2);
-                float3 curvePos = math.lerp(MathUtils.Position(edgeGeometry.m_Start.m_Left, t.x), MathUtils.Position(edgeGeometry.m_Start.m_Right, t.x), 0.5f);
-                float weight = math.max(0f, 1f - math.distance(@float.xz, curvePos.xz) / (1.5f * this.m_CellSize));
-                this.AddData(availability, availability2, availability3, availability4, availability5, t, curvePos, weight);
-            }
-            for (int j = 1; j <= num2; j++)
-            {
-                float2 t2 = new float2(j, num + j) / new float2(num2, num + num2);
-                float3 curvePos2 = math.lerp(MathUtils.Position(edgeGeometry.m_End.m_Left, t2.x), MathUtils.Position(edgeGeometry.m_End.m_Right, t2.x), 0.5f);
-                float weight2 = math.max(0f, 1f - math.distance(@float.xz, curvePos2.xz) / (1.5f * this.m_CellSize));
-                this.AddData(availability, availability2, availability3, availability4, availability5, t2, curvePos2, weight2);
-            }
-        }
-    }
-}
 */
 
 
