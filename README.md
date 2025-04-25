@@ -11,11 +11,11 @@
 - BepInEx 5.4.21
 
 ## Install
-- 1. Install BepInEx 5.4.21 x64(https://github.com/BepInEx/BepInEx/releases/tag/v5.4.21) in the game root directory, run the game once then exit.
+1. Install BepInEx 5.4.21 x64(https://github.com/BepInEx/BepInEx/releases/tag/v5.4.21) in the game root directory, run the game once then exit.
 Here is the detailed BepInEx installation introduction.(https://docs.bepinex.dev/articles/user_guide/installation/index.html)
-- download and unzip the Release zip file, then get MapExtPDX folder(2 file) and MapExtPatch folder(1 files).
-- copy MapExtPDX folder to game local pdx mod folder. (%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
-- copy MapExtPatch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
+2. download and unzip the Release zip file, then get MapExtPDX folder(2 file) and MapExtPatch folder(1 files).
+3. copy MapExtPDX folder to game local pdx mod folder. (%USERPROFILE%\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods)
+4. copy MapExtPatch folder to gameroot\BepInEx\patchers folder. (not \plungins !)
  
 ## Usage
 For 57km^2 version(more stable):
