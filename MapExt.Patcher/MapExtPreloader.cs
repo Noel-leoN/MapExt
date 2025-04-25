@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2024 Noel2(Noel-leoN)
 // Licensed under the MIT License.
 // See LICENSE in the project root for full license information.
+// Recommended for non-commercial use. For commercial purposes, please consider contacting the author.
+// When using this part of the code, please clearly credit [Project Name] and the author.
 
 using System; // 使用BepInEx自带日志
 using System.Collections.Generic;
