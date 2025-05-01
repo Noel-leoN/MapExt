@@ -1,5 +1,8 @@
 # Cities Skylines 2 Map Extended Mod
 
+# Note 
+- After some testing, it seems that MapExt2 "pure" PDX version (harmony transpiler policy) doesn't seem to have much impact on CPU performance, so I'll focus on MapExt2 in the future, while the BepInEx version is used for quick builds and assisted testing.
+
 ## Introduction
 
 - 57km^2 Extended Map (4x4 the size of the vanilla map)
