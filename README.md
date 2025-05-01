@@ -33,8 +33,8 @@ Supported terrain image format: 4096x4096 16bit grayscale terrain image (PNG or 
 - If you have an earlier version installed, be sure to delete all directories and files, including BepInEx/patcher/MapExt and local PDX mods/MapExt.PDX
 
 ## Code implementation & Compatibility description for modders
-- The main patching logic uses BepinEx MonoCecil Preloader to patch static fields (which is very difficult to do with ECS+Harmony and other methods), and then uses Harmony IL replaces and patches the method that calls the BurstJob of the relevant static fields that have been inlined.
-- Interestingly, they have built-in support for BepInEx and Harmony in the vanilla game code. It's not quite clear why some people are against BepInEx for this game.
+- The main patching logic uses BepinEx MonoCecil Preloader to patch static fields (which is very difficult to do with ECS+Harmony and other methods), and then uses Harmony Transpiler IL replaces and patches the method that calls the BurstJob of the relevant static fields that have been inlined (which is also difficult and inefficient to do with ECS only) .
+- Interestingly, there's built-in support for BepInEx and Harmony in the vanilla game code. 
 - Made a Harmony transpiler universal helper tool to great easily replace Burst Jobs and make future maintenance very simple.
 - Theoretically, except for a slight delay in starting to enter the game logo screen, the performance in the game will not be much affected. 
 
